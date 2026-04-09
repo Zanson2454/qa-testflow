@@ -1,0 +1,58 @@
+{
+  "task_id": "task-001",
+  "current_iteration": 1,
+  "current_state": "created",
+  "current_goal": "Initial setup and first iteration planning",
+  "current_plan": "docs/plans/iter-001-plan.md",
+  "whitepaper_version": "v2",
+  "allowed_states": [
+    "created",
+    "planning",
+    "designing",
+    "implementing",
+    "testing",
+    "reviewing",
+    "repairing",
+    "approved"
+  ],
+  "transition_rules": {
+    "created": [
+      "planning"
+    ],
+    "planning": [
+      "designing",
+      "repairing"
+    ],
+    "designing": [
+      "implementing",
+      "repairing"
+    ],
+    "implementing": [
+      "testing",
+      "repairing"
+    ],
+    "testing": [
+      "reviewing",
+      "repairing"
+    ],
+    "reviewing": [
+      "approved",
+      "repairing"
+    ],
+    "repairing": [
+      "planning",
+      "implementing",
+      "testing",
+      "reviewing"
+    ],
+    "approved": []
+  },
+  "retry_count": 0,
+  "max_iterations": 8,
+  "max_retry": 3,
+  "stop_conditions": [
+    "repeated failure",
+    "critical error"
+  ],
+  "history": []
+}
