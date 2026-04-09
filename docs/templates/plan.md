@@ -1,12 +1,12 @@
-# Plan Template
+# 计划模板
 
-## goal
+## 目标（goal）
 - [本轮目标]
 
-## steps
+## 步骤（steps）
 1. [步骤名称] -> [预期产物]
 2. [步骤名称] -> [预期产物]
 
-## done_criteria
+## 完成标准（done_criteria）
 - [ ] [验收标准 1]
 - [ ] [验收标准 2]

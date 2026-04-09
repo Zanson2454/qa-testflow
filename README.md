@@ -31,23 +31,23 @@ qa-testflow/
 ## 快速开始
 
 1. 初始化后进入项目根目录：
-  - `cd qa-testflow`
+   - `cd qa-testflow`
 2. 查看当前任务状态：
-  - `python3 workflow/run.py`
+   - `python3 workflow/run.py`
 3. 执行基础质量门禁：
-  - `python3 workflow/check_quality.py`
+   - `python3 workflow/check_quality.py`
 4. 按规范开始第一轮迭代：
-  - 在 `docs/plans/` 创建本轮 plan（含 `status` 字段）
-  - 在 `harness/changes/`、`harness/reviews/`、`harness/retros/`、`harness/handoffs/` 写入本轮产物
+   - 在 `docs/plans/` 创建本轮 plan（含 `status` 字段）
+   - 在 `harness/changes/`、`harness/reviews/`、`harness/retros/`、`harness/handoffs/` 写入本轮产物
 5. 参考示例资产开始首轮：
-  - `docs/plans/iter-001-plan.md`
-  - `docs/plans/index.md`
-  - `harness/changes/2026-04-09-01-change-init-scaffold.md`
-  - `harness/reviews/2026-04-09-01-review-init-scaffold.md`
-  - `harness/retros/2026-04-09-01-retro-init-scaffold.md`
-  - `harness/handoffs/2026-04-09-01-handoff-next-focus.md`
+   - `docs/plans/iter-001-plan.md`
+   - `docs/plans/index.md`
+   - `harness/changes/2026-04-09-01-change-init-scaffold.md`
+   - `harness/reviews/2026-04-09-01-review-init-scaffold.md`
+   - `harness/retros/2026-04-09-01-retro-init-scaffold.md`
+   - `harness/handoffs/2026-04-09-01-handoff-next-focus.md`
 6. 更新主线状态：
-  - 修改 `workflow/state/task-state.json`
+   - 修改 `workflow/state/task-state.json`
 
 ## Agent 工作模式
 
@@ -88,4 +88,3 @@ qa-testflow/
 - 不保留一次性调试脚本或脏测试到迭代结束。
 - 验收通过后形成正式回归基线，后续迭代优先回归。
 - 若影响既有基线，需同步更新并在 change record 中说明影响。
-

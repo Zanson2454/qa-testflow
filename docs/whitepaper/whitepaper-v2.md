@@ -1,4 +1,4 @@
-# Agent Harness 白皮书 v2（工程版）
+# 智能体工程白皮书 v2（工程版）
 
 ## 1. 目的
 
@@ -14,7 +14,7 @@
 
 ## 2. 核心系统模型
 
-Goal → Plan → Design → Implement → Test → Evaluate → Reflect → Repair → Loop → Deliver
+目标（Goal）→ 计划（Plan）→ 设计（Design）→ 实现（Implement）→ 测试（Test）→ 评估（Evaluate）→ 反思（Reflect）→ 修复（Repair）→ 迭代（Loop）→ 交付（Deliver）
 
 ---
 
@@ -22,9 +22,9 @@ Goal → Plan → Design → Implement → Test → Evaluate → Reflect → Rep
 
 所有产物必须遵循结构化 schema。
 
-### 通用 Schema
+### 通用规范（Schema）
 
-artifact:
+artifact（产物）:
   id: string
   type: string
   stage: string
@@ -33,7 +33,7 @@ artifact:
 
 ---
 
-### Plan 模板
+### 计划模板（Plan）
 
 plan:
   goal: string
@@ -44,7 +44,7 @@ plan:
 
 ---
 
-### Evaluation 模板
+### 评估模板（Evaluation）
 
 evaluation:
   passed: boolean
@@ -54,7 +54,7 @@ evaluation:
 
 ---
 
-### Reflection 模板
+### 复盘模板（Reflection）
 
 reflection:
   root_causes: []
@@ -62,7 +62,7 @@ reflection:
 
 ---
 
-### Change Artifact
+### 变更产物（Change Artifact）
 
 change:
   iteration: string
@@ -74,7 +74,7 @@ change:
 
 ---
 
-### Continuation Packet
+### 续接包（Continuation Packet）
 
 continuation:
   task_id: string

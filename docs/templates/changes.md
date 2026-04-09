@@ -1,12 +1,12 @@
-# Change Template
+# 变更模板（change）
 
-iteration: iter-XXX
-commits:
+iteration（轮次）: iter-XXX
+commits（提交）:
   - [commit hash / range]
-files:
+files（文件）:
   - [changed file]
-summary: [本轮改动摘要]
-risks:
+summary（摘要）: [本轮改动摘要]
+risks（风险）:
   - [风险项]
-unresolved:
+unresolved（未解决）:
   - [未解决问题]

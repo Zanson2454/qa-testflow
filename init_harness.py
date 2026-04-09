@@ -1,11 +1,14 @@
 import json
 import shutil
+from datetime import date
 from pathlib import Path
 
 
 def create_harness(project_name):
+    # 支持传入 "." 初始化当前目录；display_name 用于文档展示更直观。
     root = Path(project_name)
     display_name = root.resolve().name if project_name in {".", "./"} else project_name
+    file_prefix = f"{date.today().isoformat()}-01"
 
     # 0. 清理历史遗留目录（避免新旧结构并存）
     legacy_dirs = [
@@ -23,6 +26,7 @@ def create_harness(project_name):
     for legacy in legacy_dirs:
         if legacy.exists():
             shutil.rmtree(legacy)
+    # 清理旧版遗留样例文件，避免与新命名规范同时存在。
     legacy_files = [
         root / "harness/changes/iter-001-change.md",
     ]
@@ -43,6 +47,7 @@ def create_harness(project_name):
     ]
     for d in dirs:
         (root / d).mkdir(parents=True, exist_ok=True)
+        # 保留空目录，避免 Git 忽略目录导致结构不完整。
         (root / d / ".gitkeep").touch()
 
     # 2. 抽象出的公共高标准 AGENTS.md
@@ -69,10 +74,12 @@ def create_harness(project_name):
 - **State Truth**: `task-state.json` 是当前确认主线的唯一状态源，严禁无授权覆盖。
 - **Done Criteria**: 当询问阶段是否完成时，必须显式对照 plan 的 `done_criteria`。
 - **Governance**: 项目内核心能力（如 skill）的变更必须遵循 `docs/templates/` 下的规范。
+- **Chinese Comments**: 新增文件必须包含有信息量的中文注释；修改文件时新增注释也默认使用中文，除非用户明确要求英文。
 
 # Git & Sync Rules
 - **Traceable Commits**: 每轮必须详细记录改动意图和风险。
 - **Push on Success**: 只要本轮有代码改动且验收通过，结束前必须提交并推送到远程仓库。
+- **Task-level Push**: 每次任务完成且测试通过后，必须立即执行一次提交并推送，禁止累计多个已通过任务再统一推送。
 - **Environment Sync**: 开始工作前必须确保本地状态与远程仓库及最近一轮 change record 同步。
 
 # Test & Baseline Rules
@@ -82,7 +89,7 @@ def create_harness(project_name):
 
 # Definition of Done
 - [ ] 目标产物按 plan 完成。
-- [ ] Evaluation 结果为 `passed: true`。
+- [ ] Review 结果为 `passed: true`。
 - [ ] Change record、Retro、Context 完整落盘。
 - [ ] 临时测试已收敛，正式回归测试基线已形成。
 - [ ] 相关代码与配置已推送至远程仓库。
@@ -90,6 +97,7 @@ def create_harness(project_name):
     (root / "AGENTS.md").write_text(agents_md, encoding="utf-8")
 
     # 3. 初始状态文件
+    # task-state.json 是流程唯一状态源，后续所有守卫脚本都依赖该文件。
     state = {
         "task_id": "task-001",
         "current_iteration": 1,
@@ -122,51 +130,51 @@ def create_harness(project_name):
 
     # 4. 治理模板 (白皮书中的结构化产物要求)
     templates = {
-        "plan.md": """# Plan Template
+        "plan.md": """# 计划模板
 
-## goal
+## 目标（goal）
 - [本轮目标]
 
-## steps
+## 步骤（steps）
 1. [步骤名称] -> [预期产物]
 2. [步骤名称] -> [预期产物]
 
-## done_criteria
+## 完成标准（done_criteria）
 - [ ] [验收标准 1]
 - [ ] [验收标准 2]
 """,
-        "review.md": """# Evaluation Template
+        "review.md": """# 评审模板（review）
 
-passed: false
-score: 0
-errors:
+passed（是否通过）: false
+score（评分）: 0
+errors（问题）:
   - [错误描述]
-suggestions:
+suggestions（建议）:
   - [改进建议]
 """,
-        "retro.md": """# Reflection Template
+        "retro.md": """# 复盘模板（retro）
 
-root_causes:
+root_causes（根因）:
   - [根因]
-fix_strategy:
+fix_strategy（修复策略）:
   - [修复策略]
-next_focus:
+next_focus（下一轮重点）:
   - [下一轮重点]
 """,
-        "changes.md": """# Change Template
+        "changes.md": """# 变更模板（change）
 
-iteration: iter-XXX
-commits:
+iteration（轮次）: iter-XXX
+commits（提交）:
   - [commit hash / range]
-files:
+files（文件）:
   - [changed file]
-summary: [本轮改动摘要]
-risks:
+summary（摘要）: [本轮改动摘要]
+risks（风险）:
   - [风险项]
-unresolved:
+unresolved（未解决）:
   - [未解决问题]
 """,
-        "handover.md": """# Handoff Template
+        "handover.md": """# 交接模板（handoff）
 
 > 用途：在新会话中快速恢复上下文，避免重复摸底。  
 > 原则：只写“当前仍有效”的事实，失效过程请标注为历史信息。
@@ -240,6 +248,7 @@ unresolved:
 - **notes**: [补充说明]
 """,
     }
+    # 模板每次初始化都会重写，确保不同项目拿到统一最新规范。
     for file_name, content in templates.items():
         (root / "docs/templates" / file_name).write_text(content, encoding="utf-8")
 
@@ -305,7 +314,7 @@ description: 按白皮书状态机执行单轮迭代并沉淀证据
 
 ## 退出条件
 - 本轮证据文件完整
-- evaluation 已给出明确结论
+- review 已给出明确结论
 - 状态文件通过守卫检查
 """,
     }
@@ -338,7 +347,7 @@ status: active
 ## plans
 - `iter-001-plan.md` - status: active
 """,
-        "harness/changes/2026-04-09-01-change-init-scaffold.md": """# 2026-04-09-01 change init scaffold
+        f"harness/changes/{file_prefix}-change-init-scaffold.md": f"""# {file_prefix} change init scaffold
 
 - files:
   - [列出本轮改动文件]
@@ -349,7 +358,7 @@ status: active
 - unresolved:
   - [未解决问题]
 """,
-        "harness/reviews/2026-04-09-01-review-init-scaffold.md": """# 2026-04-09-01 review init scaffold
+        f"harness/reviews/{file_prefix}-review-init-scaffold.md": f"""# {file_prefix} review init scaffold
 
 passed: false
 score: 0
@@ -358,7 +367,7 @@ errors:
 suggestions:
   - [待补充]
 """,
-        "harness/retros/2026-04-09-01-retro-init-scaffold.md": """# 2026-04-09-01 retro init scaffold
+        f"harness/retros/{file_prefix}-retro-init-scaffold.md": f"""# {file_prefix} retro init scaffold
 
 root_causes:
   - [待补充]
@@ -367,7 +376,7 @@ fix_strategy:
 next_focus:
   - [待补充]
 """,
-        "harness/handoffs/2026-04-09-01-handoff-next-focus.md": """# 2026-04-09-01 handoff next focus
+        f"harness/handoffs/{file_prefix}-handoff-next-focus.md": f"""# {file_prefix} handoff next focus
 
 previous_changes:
   - [待补充]
@@ -377,6 +386,7 @@ next_focus:
   - [待补充]
 """,
     }
+    # 示例资产使用当天日期，避免“历史日期”给新项目带来误导。
     for rel_path, content in starter_assets.items():
         (root / rel_path).write_text(content, encoding="utf-8")
 
@@ -570,10 +580,10 @@ if __name__ == "__main__":
 5. 参考示例资产开始首轮：
    - `docs/plans/iter-001-plan.md`
    - `docs/plans/index.md`
-   - `harness/changes/2026-04-09-01-change-init-scaffold.md`
-   - `harness/reviews/2026-04-09-01-review-init-scaffold.md`
-   - `harness/retros/2026-04-09-01-retro-init-scaffold.md`
-   - `harness/handoffs/2026-04-09-01-handoff-next-focus.md`
+   - `harness/changes/{file_prefix}-change-init-scaffold.md`
+   - `harness/reviews/{file_prefix}-review-init-scaffold.md`
+   - `harness/retros/{file_prefix}-retro-init-scaffold.md`
+   - `harness/handoffs/{file_prefix}-handoff-next-focus.md`
 6. 更新主线状态：
    - 修改 `workflow/state/task-state.json`
 
@@ -621,24 +631,25 @@ if __name__ == "__main__":
 
     # 10. 初始化白皮书文件与索引（如果不存在则创建）
     whitepaper_files = {
-        "whitepaper-v1.md": """# Whitepaper v1
+        "whitepaper-v1.md": """# 智能体工程白皮书（v1）
 
-## Purpose
+## 目的
 初版白皮书，定义 Agent Harness 的基础流程与产物规范。
 
-## Notes
+## 说明
 - 本文件建议作为历史基线，不再新增复杂规则。
 """,
-        "whitepaper-v2.md": """# Whitepaper v2
+        "whitepaper-v2.md": """# 智能体工程白皮书（v2）
 
-## Purpose
+## 目的
 工程化增强版白皮书，作为当前默认执行规范。
 
-## Notes
+## 说明
 - 推荐与 `workflow/state/task-state.json` 中 `whitepaper_version` 保持一致。
 - 若规则升级，请新增版本并在索引中说明差异。
 """,
     }
+    # 白皮书仅在缺失时创建，避免覆盖用户手工维护内容。
     for name, content in whitepaper_files.items():
         path = root / "docs/whitepaper" / name
         if not path.exists():

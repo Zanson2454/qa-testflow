@@ -21,10 +21,12 @@
 - **State Truth**: `task-state.json` 是当前确认主线的唯一状态源，严禁无授权覆盖。
 - **Done Criteria**: 当询问阶段是否完成时，必须显式对照 plan 的 `done_criteria`。
 - **Governance**: 项目内核心能力（如 skill）的变更必须遵循 `docs/templates/` 下的规范。
+- **Chinese Comments**: 新增文件必须包含有信息量的中文注释；修改文件时新增注释也默认使用中文，除非用户明确要求英文。
 
 # Git & Sync Rules
 - **Traceable Commits**: 每轮必须详细记录改动意图和风险。
 - **Push on Success**: 只要本轮有代码改动且验收通过，结束前必须提交并推送到远程仓库。
+- **Task-level Push**: 每次任务完成且测试通过后，必须立即执行一次提交并推送，禁止累计多个已通过任务再统一推送。
 - **Environment Sync**: 开始工作前必须确保本地状态与远程仓库及最近一轮 change record 同步。
 
 # Test & Baseline Rules
@@ -34,7 +36,7 @@
 
 # Definition of Done
 - [ ] 目标产物按 plan 完成。
-- [ ] Evaluation 结果为 `passed: true`。
+- [ ] Review 结果为 `passed: true`。
 - [ ] Change record、Retro、Context 完整落盘。
 - [ ] 临时测试已收敛，正式回归测试基线已形成。
 - [ ] 相关代码与配置已推送至远程仓库。
