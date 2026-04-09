@@ -1,0 +1,30 @@
+# 2026-04-09-02 change prd to e2e baseline
+
+- files:
+  - `.gitignore`
+  - `docs/plans/iter-001-plan.md`
+  - `docs/plans/index.md`
+  - `docs/prd/index.md`
+  - `docs/prd/PRD-001-portal-public-page-v1-confirmation.md`
+  - `docs/prd/门户支持配置公开页面.pdf`
+  - `docs/testcases/PRD-001-portal-public-page-case-mapping-v1.md`
+  - `docs/testcases/e2e-acceptance-standard.md`
+  - `docs/testcases/e2e-runbook.md`
+  - `package.json`
+  - `playwright.config.ts`
+  - `tests/e2e/portal-public-page.p0.spec.ts`
+  - `tests/fixtures/env.ts`
+  - `tests/fixtures/auth.ts`
+  - `tests/pages/consolePublicPageConfigPage.ts`
+  - `tests/pages/portalPublicPageView.ts`
+- intent:
+  - 将协作主线收敛为 `PRD -> 测试用例 -> E2E验收`，并建立最小可执行 Playwright 基线。
+  - 支持通过 `.env` 的 Cookie 直接登录 console，便于业务联调。
+  - 将原始 PRD 纳入 `docs/prd` 统一管理，并引入 `prd_id/version` 追踪字段。
+- risks:
+  - console 页面定位器当前仍为占位，真实页面元素未完成对齐。
+  - P0 仅 1/3 通过，尚未达到发布前回归基线要求。
+  - 环境中 Cookie 可能过期，影响联调稳定性。
+- unresolved:
+  - `E2E-PRD001-P0-01` 与 `E2E-PRD001-P0-02` 失败，需完成 console 定位器探测与替换。
+  - `harness/reviews` 结论当前为 `passed: false`，等待下一轮修复后复验。
