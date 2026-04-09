@@ -3,14 +3,16 @@
 status: active
 
 ## goal
-- 完成项目初始化后的第一轮规划与执行约束确认。
+- 完成“PRD -> 测试用例 -> E2E验收”主线的需求澄清与确认产物落盘，作为后续工程实现唯一输入。
 
 ## steps
-1. 对齐 `AGENTS.md` 与 `docs/whitepaper/` 规范
-2. 编写首轮 change/review/retro/context
-3. 更新 `task-state.json` 并确认下一轮 focus
+1. review 最近一轮 `change/review/retro`，补齐本轮上下文基线
+2. 形成 PRD 需求确认文档（范围、不做项、验收口径、风险）
+3. 形成 PRD 到用例映射文档（P0/P1、断言、证据点、版本策略）
+4. 形成 E2E 验收标准文档（通过/失败标准、证据标准、PM验收闸门）
 
 ## done_criteria
-- [ ] 已生成并评审 iter-001 plan
-- [ ] 已产出首轮 change/review/retro/context
-- [ ] `review` 结果为 `passed: true`
+- [ ] 本轮需求确认文档已落盘并可被评审
+- [ ] PRD->测试用例映射已完成且包含版本字段
+- [ ] E2E验收标准已定义通过/失败与证据要求
+- [ ] 本轮不包含脚手架代码实现

@@ -2,11 +2,12 @@
 
 iteration（轮次）: iter-XXX
 commits（提交）:
-  - [commit hash / range]
+
+- [commit hash / range]
 files（文件）:
-  - [changed file]
+- [changed file]
 summary（摘要）: [本轮改动摘要]
 risks（风险）:
-  - [风险项]
+- [风险项]
 unresolved（未解决）:
-  - [未解决问题]
+- [未解决问题]
