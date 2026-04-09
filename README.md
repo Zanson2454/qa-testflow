@@ -36,6 +36,7 @@ qa-testflow/
   - `python3 workflow/run.py`
 3. 执行基础质量门禁：
   - `python3 workflow/check_quality.py`
+  - 或 `npm run check:harness`
 4. 按规范开始第一轮迭代：
   - 在 `docs/plans/` 创建本轮 plan（含 `status` 字段）
   - 在 `harness/changes/`、`harness/reviews/`、`harness/retros/`、`harness/handoffs/` 写入本轮产物
@@ -88,4 +89,5 @@ qa-testflow/
 - 不保留一次性调试脚本或脏测试到迭代结束。
 - 验收通过后形成正式回归基线，后续迭代优先回归。
 - 若影响既有基线，需同步更新并在 change record 中说明影响。
+- 提交前必须通过 harness 四件套校验（change/review/retro/handoff）。
 

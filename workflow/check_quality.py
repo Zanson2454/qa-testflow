@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 
 REQUIRED_FILES = [
@@ -19,6 +20,31 @@ DATE_NAME_PATTERNS = {
     "harness/retros": r"^\d{4}-\d{2}-\d{2}-\d{2}-retro-[a-z0-9-]+\.md$",
     "harness/handoffs": r"^\d{4}-\d{2}-\d{2}-\d{2}-handoff-[a-z0-9-]+\.md$",
 }
+
+
+def _extract_prefix(file_name: str) -> str:
+    # 文件命名前缀固定为 YYYY-MM-DD-XX，用于对齐同一轮证据四件套。
+    matched = re.match(r"^(\d{4}-\d{2}-\d{2}-\d{2})-", file_name)
+    return matched.group(1) if matched else ""
+
+
+def _validate_harness_bundle() -> None:
+    bucket = {}
+    for dir_path in DATE_NAME_PATTERNS:
+        files = sorted(Path(dir_path).glob("*.md"))
+        if not files:
+            print(f"[FAIL] {dir_path} 缺少记录文件，无法形成证据闭环。")
+            raise SystemExit(1)
+        bucket[dir_path] = {_extract_prefix(file.name) for file in files if _extract_prefix(file.name)}
+
+    shared_prefix = set.intersection(*bucket.values())
+    if not shared_prefix:
+        print("[FAIL] 未发现同一轮次同时存在 change/review/retro/handoff 四件套。")
+        print("       请补齐 harness 记录后再提交。")
+        raise SystemExit(1)
+
+    latest_prefix = sorted(shared_prefix)[-1]
+    print(f"[PASS] harness 四件套已对齐，最新轮次前缀: {latest_prefix}")
 
 
 def main():
@@ -52,7 +78,6 @@ def main():
         print(f"[FAIL] current_plan 不存在: {state['current_plan']}")
         raise SystemExit(1)
 
-    import re
     for dir_path, pattern in DATE_NAME_PATTERNS.items():
         p = Path(dir_path)
         if not p.exists():
@@ -63,6 +88,7 @@ def main():
                 print(f"       期望正则: {pattern}")
                 raise SystemExit(1)
 
+    _validate_harness_bundle()
     print("[PASS] 基础质量门禁通过。")
 
 

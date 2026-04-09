@@ -4,6 +4,7 @@
   "private": true,
   "description": "PRD 到 E2E 验收测试工程",
   "scripts": {
+    "check:harness": "python3 workflow/check_quality.py",
     "test:e2e": "playwright test",
     "test:e2e:p0": "playwright test --grep @p0",
     "test:e2e:headed": "playwright test --headed",
