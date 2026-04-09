@@ -6,6 +6,7 @@
 - **Plan Driven**: 必须先生成 plan，再进行实现；严禁跳过 plan 直接实现。
 - **Iterative Evidence**: 每轮必须生成完整的 change record、review 和 retro。
 - **Review Continuity**: 下一轮必须显式说明对上一轮改动的 context。
+- **Session Start Protocol**: 每次新会话默认执行“继续任务：先做 review first（读取最新 change/review/retro/handoff），再执行当前 plan”，除非用户明确指定其他起手方式。
 
 # Required Outputs
 - **exec plan**: 详尽的执行步骤与验收标准。
