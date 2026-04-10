@@ -1,0 +1,21 @@
+# 2026-04-10-03 change output loop design doc
+
+- files:
+  - `docs/plans/index.md`
+  - `docs/plans/2026-04-10-03-plan-output-loop-design-doc.md`
+  - `docs/superpowers/specs/2026-04-10-output-process-auto-loop-design.md`
+  - `harness/contexts/2026-04-10-03-context-output-loop-design.md`
+  - `harness/changes/2026-04-10-03-change-output-loop-design-doc.md`
+  - `harness/reviews/2026-04-10-03-review-output-loop-design-doc.md`
+  - `harness/retros/2026-04-10-03-retro-output-loop-design-doc.md`
+  - `harness/handoffs/2026-04-10-03-handoff-output-loop-design-doc.md`
+- intent:
+  - 将“输出流程自动闭环与自我修复机制”沉淀为正式设计稿
+  - 为本次设计评审补齐可追溯的 exec plan、context 与 harness 四件套
+  - 明确当前范围仅限项目输出流程，不进入业务执行器实施
+- risks:
+  - 当前设计仍为架构层文档，尚未验证与现有目录结构、状态机字段的最终贴合度
+  - 若后续决定采用 markdown + json 双轨产物，需要再评估现有 harness 模板的兼容成本
+- unresolved:
+  - 用户尚未完成对设计稿的正式评审
+  - 尚未拆分实施 plan，也未定义第一批自动修复的白名单
