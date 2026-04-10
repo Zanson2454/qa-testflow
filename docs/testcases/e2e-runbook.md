@@ -4,15 +4,19 @@
 
 1. 复制环境变量模板：
   - `cp .env.example .env`
-2. 填写环境变量：
+2. 填写环境变量（以 `.env` 为准）：
   - `CONSOLE_BASE_URL`
   - `PORTAL_BASE_URL`
-  - `CONSOLE_STORAGE_STATE`
-3. 准备 Cookie 登录态文件：
-  - 在 `.auth/console.storageState.json` 放入有效 storageState
-4. 安装依赖并安装浏览器：
+  - `CONSOLE_PUBLIC_PAGE_PATH`（须为「公开页面」配置页的完整路由，不要仅填 `/team/xxx`）
+  - `CONSOLE_SCENE_PAGE_NAME`（与 console 下拉展示一致）
+  - `Cookie` 或 `CONSOLE_COOKIE`（推荐，无需 storageState 文件）
+3. 可选：未提供 Cookie 时，使用 `CONSOLE_STORAGE_STATE` 指向 `.auth/console.storageState.json`
+4. 控件对不齐时，可在 `.env` 设置 `E2E_PUBLIC_PAGE_*_TESTID`、`E2E_PORTAL_ROOT_TESTID`
+5. 安装依赖并安装浏览器：
   - `npm install`
   - `npx playwright install`
+6. 提交前执行：
+  - `npm run check:harness`
 
 ## 2. 执行命令
 
@@ -20,6 +24,8 @@
   - `npm run test:e2e`
 - 仅 P0：
   - `npm run test:e2e:p0`
+- 可视调试：
+  - `npm run test:e2e:headed` 或 `npx playwright test --grep @p0 --headed`
 - 查看报告：
   - `npm run test:e2e:report`
 

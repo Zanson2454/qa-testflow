@@ -12,11 +12,11 @@ test.describe("PRD-001 portal public page @p0", () => {
     const page = await context.newPage();
     const consolePage = new ConsolePublicPageConfigPage(page);
 
-    await consolePage.open(env.consoleBaseUrl, env.consolePublicPagePath);
-    await consolePage.choosePublicPageByName("AT_公开页面");
-    await consolePage.save();
-    await consolePage.assertSaveSuccess();
-    const publicLink = await consolePage.readPublicLink();
+    const publicLink = await consolePage.configureAndReadPublicLink(
+      env.consoleBaseUrl,
+      env.consolePublicPagePath,
+      env.consoleScenePageName
+    );
 
     expect(publicLink).toContain("http");
     await context.close();
@@ -26,8 +26,11 @@ test.describe("PRD-001 portal public page @p0", () => {
     const consoleContext = await createConsoleContext(browser);
     const consoleTab = await consoleContext.newPage();
     const consolePage = new ConsolePublicPageConfigPage(consoleTab);
-    await consolePage.open(env.consoleBaseUrl, env.consolePublicPagePath);
-    const publicLink = await consolePage.readPublicLink();
+    const publicLink = await consolePage.configureAndReadPublicLink(
+      env.consoleBaseUrl,
+      env.consolePublicPagePath,
+      env.consoleScenePageName
+    );
     await consoleContext.close();
 
     const portalContext = await createPortalAnonymousContext(browser);
