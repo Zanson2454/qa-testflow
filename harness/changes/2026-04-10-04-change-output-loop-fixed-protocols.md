@@ -1,0 +1,21 @@
+# 2026-04-10-04 change output loop fixed protocols
+
+- files:
+  - `docs/plans/index.md`
+  - `docs/plans/2026-04-10-04-plan-output-loop-fixed-protocols.md`
+  - `docs/superpowers/specs/2026-04-10-output-process-auto-loop-design.md`
+  - `harness/contexts/2026-04-10-04-context-output-loop-fixed-protocols.md`
+  - `harness/changes/2026-04-10-04-change-output-loop-fixed-protocols.md`
+  - `harness/reviews/2026-04-10-04-review-output-loop-fixed-protocols.md`
+  - `harness/retros/2026-04-10-04-retro-output-loop-fixed-protocols.md`
+  - `harness/handoffs/2026-04-10-04-handoff-output-loop-fixed-protocols.md`
+- intent:
+  - 将 4 条关键协议正式写回设计稿，作为后续实施前的固定治理约束
+  - 明确 `task-state.json`、对象级 `.json` 与 markdown 视图的职责边界
+  - 将 `review gate` 正式更名为 `quality gate`，避免运行时语义冲突
+- risks:
+  - 当前仍是设计层修订，尚未同步到实施 plan 或具体 schema 文件
+  - 若后续实现时发现 `task-state.json` 字段扩展方式不合适，仍需再调整字段命名
+- unresolved:
+  - 尚未进入实施 plan
+  - 尚未定义第一批自动修复白名单的具体 schema
