@@ -12,11 +12,7 @@ test.describe("PRD-001 portal public page @p0", () => {
     const page = await context.newPage();
     const consolePage = new ConsolePublicPageConfigPage(page);
 
-    const publicLink = await consolePage.configureAndReadPublicLink(
-      env.consoleBaseUrl,
-      env.consolePublicPagePath,
-      env.consoleScenePageName
-    );
+    const publicLink = await consolePage.configureAndReadPublicLink();
 
     expect(publicLink).toContain("http");
     await context.close();
@@ -26,11 +22,7 @@ test.describe("PRD-001 portal public page @p0", () => {
     const consoleContext = await createConsoleContext(browser);
     const consoleTab = await consoleContext.newPage();
     const consolePage = new ConsolePublicPageConfigPage(consoleTab);
-    const publicLink = await consolePage.configureAndReadPublicLink(
-      env.consoleBaseUrl,
-      env.consolePublicPagePath,
-      env.consoleScenePageName
-    );
+    const publicLink = await consolePage.configureAndReadPublicLink();
     await consoleContext.close();
 
     const portalContext = await createPortalAnonymousContext(browser);
@@ -47,7 +39,6 @@ test.describe("PRD-001 portal public page @p0", () => {
     const portalTab = await portalContext.newPage();
     const portalPage = new PortalPublicPageView(portalTab);
 
-    // portal 路径以环境提供的 BASE_URL 为准，不在脚本中追加固定路径。
     await portalPage.open(env.portalBaseUrl);
     await portalPage.assertNoPermissionIfConfigured(env.portalNoPermissionText);
     await portalContext.close();

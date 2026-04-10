@@ -16,10 +16,20 @@ export type E2EEnv = {
   portalBaseUrl: string;
   consoleStorageState: string;
   consoleCookie?: string;
-  consolePublicPagePath: string;
-  /** 下拉中要选择的场景页名称，与用例中传入一致时可由环境覆盖 */
+  /** 登录成功页特征文案 */
+  consoleLoginSuccessText: string;
+  /** 头像菜单中展示的平台版本号（完整断言） */
+  consolePlatformVersion: string;
+  /** 侧栏/菜单：门户管理 */
+  consolePortalMenuText: string;
+  /** 门户列表中的门户名称 */
+  consolePortalEntryName: string;
+  /** 配置区：门户配置 */
+  consolePortalConfigText: string;
+  /** 子菜单：公开页面 */
+  consolePublicPageMenuText: string;
+  /** 进入公开页面配置后，下拉选择的场景页名称（可选覆盖，默认 AT_公开页面） */
   consoleScenePageName: string;
-  /** 可选：覆盖默认的 data-testid，便于未加 testid 前联调 */
   e2ePublicPageSelectTestId?: string;
   e2ePublicPageSaveTestId?: string;
   e2ePublicPageLinkTestId?: string;
@@ -34,10 +44,13 @@ export function loadEnv(): E2EEnv {
     consoleBaseUrl: required("CONSOLE_BASE_URL"),
     portalBaseUrl: required("PORTAL_BASE_URL"),
     consoleStorageState: process.env.CONSOLE_STORAGE_STATE || path.join(".auth", "console.storageState.json"),
-    // 兼容 Cookie/COOKIE 两种写法，避免环境变量大小写差异导致登录失败。
     consoleCookie: process.env.CONSOLE_COOKIE || process.env.COOKIE || process.env.Cookie,
-    // 不再提供默认路径，强制从 .env 显式配置，避免误跑到错误页面。
-    consolePublicPagePath: required("CONSOLE_PUBLIC_PAGE_PATH"),
+    consoleLoginSuccessText: process.env.CONSOLE_LOGIN_SUCCESS_TEXT || "欢迎登入系统~",
+    consolePlatformVersion: process.env.CONSOLE_PLATFORM_VERSION || "3.0.2603-beta.0315",
+    consolePortalMenuText: process.env.CONSOLE_PORTAL_MENU_TEXT || "门户管理",
+    consolePortalEntryName: process.env.CONSOLE_PORTAL_ENTRY_NAME || "TERP 运营端",
+    consolePortalConfigText: process.env.CONSOLE_PORTAL_CONFIG_TEXT || "门户配置",
+    consolePublicPageMenuText: process.env.CONSOLE_PUBLIC_PAGE_MENU_TEXT || "公开页面",
     consoleScenePageName: process.env.CONSOLE_SCENE_PAGE_NAME || "AT_公开页面",
     e2ePublicPageSelectTestId: process.env.E2E_PUBLIC_PAGE_SELECT_TESTID,
     e2ePublicPageSaveTestId: process.env.E2E_PUBLIC_PAGE_SAVE_TESTID,

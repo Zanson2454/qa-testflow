@@ -2,25 +2,14 @@ import { expect, Locator, Page } from "@playwright/test";
 import { loadEnv } from "../fixtures/env";
 
 /**
- * Console 侧「公开页面」配置页面对象。
- * 定位器优先读环境变量中的 testid，便于与真实页面逐步对齐；未配置时尝试通用兜底。
+ * Console 侧：从首页经菜单进入「公开页面」配置，并完成选场景、保存、读取公开链接。
+ * 导航步骤与业务约定一致：仅依赖 CONSOLE_BASE_URL + Cookie，不配置深层 path。
  */
 export class ConsolePublicPageConfigPage {
   constructor(private readonly page: Page) {}
 
   private env() {
     return loadEnv();
-  }
-
-  /** 若仍落在「选项目」引导页，说明 CONSOLE_PUBLIC_PAGE_PATH 未指向功能页 */
-  async assertNotOnWelcomeScreen(): Promise<void> {
-    const projectPicker = this.page.getByText(/Select project for resource management/i);
-    const visible = await projectPicker.first().isVisible().catch(() => false);
-    if (visible) {
-      throw new Error(
-        "当前仍在 console 项目选择引导页。请将 .env 中 CONSOLE_PUBLIC_PAGE_PATH 配成「公开页面」配置功能的完整路由（不要仅填 /team/xxx）。"
-      );
-    }
   }
 
   private selectLocator(): Locator {
@@ -62,17 +51,79 @@ export class ConsolePublicPageConfigPage {
       .or(this.page.getByText(/保存成功|已保存|成功/));
   }
 
-  async open(baseUrl: string, path: string): Promise<void> {
-    await this.page.goto(`${baseUrl}${path}`, { waitUntil: "domcontentloaded" });
+  /**
+   * STEP1：打开 console 首页并断言登录成功特征文案。
+   */
+  async gotoConsoleHomeAndAssertLogin(): Promise<void> {
+    const e = this.env();
+    await this.page.goto(e.consoleBaseUrl, { waitUntil: "domcontentloaded" });
     await this.page.waitForLoadState("networkidle", { timeout: 30_000 }).catch(() => {});
-    await this.assertNotOnWelcomeScreen();
+    await expect(this.page.getByText(e.consoleLoginSuccessText)).toBeVisible({ timeout: 30_000 });
+  }
+
+  /**
+   * STEP2：点击左下角头像，断言平台版本号展示。
+   */
+  async openAvatarAndAssertPlatformVersion(): Promise<void> {
+    const e = this.env();
+    const avatar = this.page.getByRole("img", { name: "avatar" }).or(this.page.locator('img[alt="avatar"]')).first();
+    await expect(avatar).toBeVisible({ timeout: 15_000 });
+    await avatar.click();
+    // 版本号须完整出现在头像相关浮层/面板中（与产品展示一致即可，不要求整段文案完全相等）
+    await expect(this.page.getByText(e.consolePlatformVersion)).toBeVisible({ timeout: 10_000 });
+    await this.page.keyboard.press("Escape").catch(() => {});
+  }
+
+  /**
+   * STEP3：进入门户管理，断言目标门户存在于列表。
+   */
+  async openPortalManagementAndAssertPortalListed(): Promise<void> {
+    const e = this.env();
+    await this.page.getByText(e.consolePortalMenuText, { exact: true }).first().click();
+    await expect(this.page.getByText(e.consolePortalEntryName, { exact: true }).first()).toBeVisible({
+      timeout: 20_000
+    });
+  }
+
+  /**
+   * STEP4：点击目标门户，断言出现「门户配置」。
+   */
+  async selectPortalAndAssertPortalConfigVisible(): Promise<void> {
+    const e = this.env();
+    await this.page.getByText(e.consolePortalEntryName, { exact: true }).first().click();
+    await expect(this.page.getByText(e.consolePortalConfigText, { exact: true }).first()).toBeVisible({
+      timeout: 20_000
+    });
+  }
+
+  /**
+   * STEP5：展开门户配置并进入「公开页面」子项。
+   */
+  async openPublicPageFromPortalConfig(): Promise<void> {
+    const e = this.env();
+    await this.page.getByText(e.consolePortalConfigText, { exact: true }).first().click();
+    await expect(this.page.getByText(e.consolePublicPageMenuText, { exact: true }).first()).toBeVisible({
+      timeout: 15_000
+    });
+    await this.page.getByText(e.consolePublicPageMenuText, { exact: true }).first().click();
+    await this.page.waitForLoadState("networkidle", { timeout: 20_000 }).catch(() => {});
+  }
+
+  /** 完整菜单导航：STEP1 → STEP5 */
+  async navigateConsoleToPublicPageModule(): Promise<void> {
+    await this.gotoConsoleHomeAndAssertLogin();
+    await this.openAvatarAndAssertPlatformVersion();
+    await this.openPortalManagementAndAssertPortalListed();
+    await this.selectPortalAndAssertPortalConfigVisible();
+    await this.openPublicPageFromPortalConfig();
   }
 
   async choosePublicPageByName(pageName: string): Promise<void> {
     const select = this.selectLocator();
     await expect(select).toBeVisible({ timeout: 30_000 });
     await select.click();
-    await this.page.getByRole("option", { name: new RegExp(pageName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")) }).click();
+    const escaped = pageName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    await this.page.getByRole("option", { name: new RegExp(escaped) }).click();
   }
 
   async save(): Promise<void> {
@@ -104,10 +155,10 @@ export class ConsolePublicPageConfigPage {
     return value;
   }
 
-  /** P0-02 与 P0-01 共用：打开页 → 选场景 → 保存 → 校验成功 → 读链接 */
-  async configureAndReadPublicLink(baseUrl: string, path: string, pageName: string): Promise<string> {
-    await this.open(baseUrl, path);
-    await this.choosePublicPageByName(pageName);
+  /** 菜单进入公开页 → 选场景 → 保存 → 读链接 */
+  async configureAndReadPublicLink(): Promise<string> {
+    await this.navigateConsoleToPublicPageModule();
+    await this.choosePublicPageByName(this.env().consoleScenePageName);
     await this.save();
     await this.assertSaveSuccess();
     return this.readPublicLink();
