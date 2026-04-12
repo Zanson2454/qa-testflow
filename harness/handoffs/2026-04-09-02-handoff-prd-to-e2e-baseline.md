@@ -35,19 +35,19 @@
 - **retro_file**: `harness/retros/2026-04-09-02-retro-prd-to-e2e-baseline.md`
 - **summary**:
   - 已建立 PRD 管理、用例映射、验收标准文档链路
-  - 已搭建 Playwright 最小基线并支持 Cookie 登录
+  - 已搭建浏览器 E2E 最小基线并支持 Cookie 登录
   - P0 当前 1 通过 2 失败，阻塞点为 console 定位器未对齐
 
 ## 5) 验证结果
 
 - **verified**:
-  - `npx playwright test --grep @p0 --headed` 可执行
+  - 项目侧 E2E 运行器可执行 `P0` 场景（headed，保留 trace）
   - `E2E-PRD001-P0-03` 可以通过
 - **not_verified**:
   - `E2E-PRD001-P0-01`、`E2E-PRD001-P0-02` 尚未通过
 - **quality_checks**:
   - `npm install` 已完成
-  - `npx playwright install chromium` 已完成
+  - 已安装 E2E 运行器所需的浏览器依赖（按当时选型）
   - `ReadLints` 无新增错误
 
 ## 6) 风险与阻塞

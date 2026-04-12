@@ -4,9 +4,9 @@ status: completed
 
 ## context
 
-- 承接上一轮 `2026-04-10-02` 的 review/handoff，但本轮主线不处理 Playwright 业务执行链路。
+- 承接上一轮 `2026-04-10-02` 的 review/handoff，但本轮主线不处理浏览器 E2E 业务执行链路。
 - 本轮仅沉淀“项目输出过程的自动闭环与自我修复”正式设计稿，供后续评审与实施规划使用。
-- 当前工作区存在未提交的 Playwright 相关改动，本轮不触碰这些文件。
+- 当前工作区存在未提交的浏览器 E2E 相关改动，本轮不触碰这些文件。
 
 ## goal
 
@@ -24,5 +24,5 @@ status: completed
 
 - [x] 正式设计稿已落盘，且明确包含目标架构、反馈闭环、失败诊断顺序与通用 validator/repair loop
 - [x] 本轮 `change/review/retro/handoff/context` 已完整落盘
-- [x] 不修改业务执行器与 Playwright 主线代码
+- [x] 不修改业务执行器与浏览器 E2E 主线代码
 - [x] `workflow/check_quality.py` 与 `workflow/run.py` 校验通过

@@ -12,7 +12,7 @@
 ## 起手命令
 
 1. `npm run check:harness`
-2. `npx playwright test --grep @p0 --headed`
+2. 在项目侧 E2E 运行器中执行 `P0`（headed）
 
 ## 交接元信息
 

@@ -11,14 +11,14 @@
   - `docs/testcases/e2e-acceptance-standard.md`
   - `docs/testcases/e2e-runbook.md`
   - `package.json`
-  - `playwright.config.ts`
+  - `E2E 配置文件（历史示例路径，模板已不再包含具体实现）`
   - `tests/e2e/portal-public-page.p0.spec.ts`
   - `tests/fixtures/env.ts`
   - `tests/fixtures/auth.ts`
   - `tests/pages/consolePublicPageConfigPage.ts`
   - `tests/pages/portalPublicPageView.ts`
 - intent:
-  - 将协作主线收敛为 `PRD -> 测试用例 -> E2E验收`，并建立最小可执行 Playwright 基线。
+  - 将协作主线收敛为 `PRD -> 测试用例 -> E2E验收`，并建立最小可执行浏览器 E2E 自动化基线。
   - 支持通过 `.env` 的 Cookie 直接登录 console，便于业务联调。
   - 将原始 PRD 纳入 `docs/prd` 统一管理，并引入 `prd_id/version` 追踪字段。
 - risks:

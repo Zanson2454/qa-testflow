@@ -46,7 +46,7 @@ qa-testflow/
   - `harness/reviews/2026-04-09-01-review-init-scaffold.md`
   - `harness/retros/2026-04-09-01-retro-init-scaffold.md`
   - `harness/handoffs/2026-04-09-01-handoff-next-focus.md`
-  - `harness/contexts/2026-04-12-01-context-template-remove-playwright.md`
+  - `harness/contexts/2026-04-12-02-context-doc-hygiene-purge-external-tool-names.md`
 6. 更新主线状态：
   - 修改 `workflow/state/task-state.json`
 
