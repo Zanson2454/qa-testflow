@@ -30,7 +30,7 @@ description: 按白皮书状态机执行单轮迭代并沉淀证据
 5. 更新 `task-state.json`：
    - 仅推进合法状态迁移
    - 维护 `current_iteration`、`retry_count`、`history`
-6. 再次执行：
+6. 再次执行（或 `python3 workflow/doctor.py` 一次跑完）：
    - `python3 workflow/check_quality.py`
    - `python3 workflow/run.py`
 
