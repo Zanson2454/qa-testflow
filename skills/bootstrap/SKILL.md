@@ -12,6 +12,7 @@ description: 新一轮开始前的项目状态对齐与启动检查
 
 - 开箱步骤与命令说明：`docs/guides/01-getting-started.md`
 - Harness 与 Ralph Loop 对照：`docs/guides/02-harness-and-ralph-loop.md`
+- 新一轮迭代（纯文档步骤）：`docs/guides/03-new-iteration-manual-steps.md`
 
 ## 执行步骤
 1. 读取 `workflow/state/task-state.json`，确认：

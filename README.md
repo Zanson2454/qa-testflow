@@ -6,7 +6,7 @@
 
 | 资源 | 说明 |
 |------|------|
-| [docs/guides/README.md](docs/guides/README.md) | **开箱即用**：命令、首轮迭代步骤、与 Ralph Loop 的对照 |
+| [docs/guides/README.md](docs/guides/README.md) | **开箱即用**：命令、首轮步骤、[新一轮纯文档步骤](docs/guides/03-new-iteration-manual-steps.md)、Ralph Loop 对照 |
 | [AGENTS.md](AGENTS.md) | Agent 与人类协作的强制流程 |
 | [docs/whitepaper/whitepaper-v2.md](docs/whitepaper/whitepaper-v2.md) | 状态机与产物 schema：`task-state.json` 中 `whitepaper_version` 应对齐 |
 
@@ -48,7 +48,7 @@ qa-testflow/
 4. 新建一轮计划时，可复制 `docs/plans/plan-template.md`，更新 `docs/plans/index.md` 与 `workflow/state/task-state.json` 中的 `current_plan`
 5. 参考示例（历史轮次，仅作格式参考）：
    - `docs/plans/iter-001-plan.md`
-   - `harness/contexts/2026-04-12-03-context-ootb-guides-and-template-hardening.md`（本轮：开箱文档与模板加固）
+   - `harness/contexts/2026-04-12-04-context-doc-only-new-iteration-guide.md`（本轮：新一轮纯文档步骤指南）
    - `harness/changes/2026-04-09-01-change-init-scaffold.md` 等早期 `harness/*` 样例
 
 ## Agent 工作模式

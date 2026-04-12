@@ -6,6 +6,7 @@
 - 开箱步骤与门禁命令：`docs/guides/01-getting-started.md`
 - Harness 与 Ralph Loop 对照：`docs/guides/02-harness-and-ralph-loop.md`
 - 指南索引：`docs/guides/README.md`
+- 新一轮迭代（仅文档、无脚本）：`docs/guides/03-new-iteration-manual-steps.md`
 
 # Working Mode
 - **Review First**: 每次开始工作必须先 review 最近一轮 change record，再进入本轮 plan。

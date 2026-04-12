@@ -15,6 +15,7 @@ REQUIRED_FILES = [
     "docs/guides/README.md",
     "docs/guides/01-getting-started.md",
     "docs/guides/02-harness-and-ralph-loop.md",
+    "docs/guides/03-new-iteration-manual-steps.md",
     "docs/plans/plan-template.md",
     "workflow/README.md",
 ]

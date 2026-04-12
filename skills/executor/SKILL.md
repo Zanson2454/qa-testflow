@@ -12,6 +12,7 @@ description: 按白皮书状态机执行单轮迭代并沉淀证据
 
 - 开箱步骤：`docs/guides/01-getting-started.md`
 - 概念对照：`docs/guides/02-harness-and-ralph-loop.md`
+- 新一轮纯文档步骤：`docs/guides/03-new-iteration-manual-steps.md`
 
 ## 执行步骤
 1. 读取并确认本轮 plan：

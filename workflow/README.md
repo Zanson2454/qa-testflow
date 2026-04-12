@@ -9,4 +9,5 @@
 
 **建议**：提交前执行 `check_quality.py`；开始工作前可执行 `run.py` 确认状态文件与 active plan 一致。
 
-操作步骤与常见问题见 **[../docs/guides/01-getting-started.md](../docs/guides/01-getting-started.md)**。
+操作步骤与常见问题见 **[../docs/guides/01-getting-started.md](../docs/guides/01-getting-started.md)**。  
+仅文档、无脚本的新一轮迭代清单见 **[../docs/guides/03-new-iteration-manual-steps.md](../docs/guides/03-new-iteration-manual-steps.md)**。
