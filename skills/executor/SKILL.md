@@ -8,6 +8,11 @@ description: 按白皮书状态机执行单轮迭代并沉淀证据
 ## 目标
 围绕单一主题完成“计划 -> 实现 -> 验收 -> 复盘”的单轮闭环，并形成可追溯产物。
 
+## 文档
+
+- 开箱步骤：`docs/guides/01-getting-started.md`
+- 概念对照：`docs/guides/02-harness-and-ralph-loop.md`
+
 ## 执行步骤
 1. 读取并确认本轮 plan：
    - `docs/plans/iter-XXX-plan.md`

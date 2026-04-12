@@ -2,12 +2,21 @@
 
 基于 Agent Harness 的通用工程化模板，聚焦 **Plan-Driven** 迭代开发、证据留痕、状态守卫与审计闭环。
 
+## 文档入口（推荐先读）
+
+| 资源 | 说明 |
+|------|------|
+| [docs/guides/README.md](docs/guides/README.md) | **开箱即用**：命令、首轮迭代步骤、与 Ralph Loop 的对照 |
+| [AGENTS.md](AGENTS.md) | Agent 与人类协作的强制流程 |
+| [docs/whitepaper/whitepaper-v2.md](docs/whitepaper/whitepaper-v2.md) | 状态机与产物 schema：`task-state.json` 中 `whitepaper_version` 应对齐 |
+
 ## 项目结构
 
 ```text
 qa-testflow/
 ├── AGENTS.md
 ├── docs/
+│   ├── guides/          # 开箱步骤与 Harness / Ralph Loop 说明
 │   ├── plans/
 │   ├── templates/
 │   └── whitepaper/
@@ -30,25 +39,17 @@ qa-testflow/
 
 ## 快速开始
 
-1. 初始化后进入项目根目录：
-  - `cd qa-testflow`
-2. 查看当前任务状态：
-  - `python3 workflow/run.py`
-3. 执行基础质量门禁：
-  - `python3 workflow/check_quality.py`
-4. 按规范开始第一轮迭代：
-  - 在 `docs/plans/` 创建本轮 plan（含 `status` 字段）
-  - 在 `harness/contexts/`、`harness/changes/`、`harness/reviews/`、`harness/retros/`、`harness/handoffs/` 写入本轮产物
-5. 参考示例资产开始首轮：
-  - `docs/plans/iter-001-plan.md`
-  - `docs/plans/index.md`
-  - `harness/changes/2026-04-09-01-change-init-scaffold.md`
-  - `harness/reviews/2026-04-09-01-review-init-scaffold.md`
-  - `harness/retros/2026-04-09-01-retro-init-scaffold.md`
-  - `harness/handoffs/2026-04-09-01-handoff-next-focus.md`
-  - `harness/contexts/2026-04-12-02-context-doc-hygiene-purge-external-tool-names.md`
-6. 更新主线状态：
-  - 修改 `workflow/state/task-state.json`
+1. 进入仓库根目录：`cd qa-testflow`
+2. 跑通门禁与状态守卫：
+   - `python3 workflow/check_quality.py`
+   - `python3 workflow/run.py`  
+   （或 `make check`、`make run`）
+3. 跟做「首轮迭代」与概念说明：**[docs/guides/01-getting-started.md](docs/guides/01-getting-started.md)**
+4. 新建一轮计划时，可复制 `docs/plans/plan-template.md`，更新 `docs/plans/index.md` 与 `workflow/state/task-state.json` 中的 `current_plan`
+5. 参考示例（历史轮次，仅作格式参考）：
+   - `docs/plans/iter-001-plan.md`
+   - `harness/contexts/2026-04-12-03-context-ootb-guides-and-template-hardening.md`（本轮：开箱文档与模板加固）
+   - `harness/changes/2026-04-09-01-change-init-scaffold.md` 等早期 `harness/*` 样例
 
 ## Agent 工作模式
 

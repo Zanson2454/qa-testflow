@@ -5,13 +5,18 @@ from pathlib import Path
 REQUIRED_FILES = [
     "AGENTS.md",
     "workflow/state/task-state.json",
-        "skills/bootstrap/SKILL.md",
-        "skills/executor/SKILL.md",
+    "skills/bootstrap/SKILL.md",
+    "skills/executor/SKILL.md",
     "docs/templates/plan.md",
     "docs/templates/review.md",
     "docs/templates/retro.md",
     "docs/templates/changes.md",
     "docs/templates/handover.md",
+    "docs/guides/README.md",
+    "docs/guides/01-getting-started.md",
+    "docs/guides/02-harness-and-ralph-loop.md",
+    "docs/plans/plan-template.md",
+    "workflow/README.md",
 ]
 
 DATE_NAME_PATTERNS = {
@@ -34,6 +39,7 @@ def _validate_harness_bundle() -> None:
         files = sorted(Path(dir_path).glob("*.md"))
         if not files:
             print(f"[FAIL] {dir_path} 缺少记录文件，无法形成证据闭环。")
+            _hint_docs()
             raise SystemExit(1)
         bucket[dir_path] = {_extract_prefix(file.name) for file in files if _extract_prefix(file.name)}
 
@@ -41,10 +47,15 @@ def _validate_harness_bundle() -> None:
     if not shared_prefix:
         print("[FAIL] 未发现同一轮次同时存在 change/review/retro/handoff 四件套。")
         print("       请补齐 harness 记录后再提交。")
+        _hint_docs()
         raise SystemExit(1)
 
     latest_prefix = sorted(shared_prefix)[-1]
     print(f"[PASS] harness 四件套已对齐，最新轮次前缀: {latest_prefix}")
+
+
+def _hint_docs():
+    print("提示：请先阅读 docs/guides/01-getting-started.md（开箱步骤与常见问题）。")
 
 
 def main():
@@ -53,6 +64,7 @@ def main():
         print("[FAIL] 缺少必需文件：")
         for item in missing:
             print(f"- {item}")
+        _hint_docs()
         raise SystemExit(1)
 
     state = json.loads(Path("workflow/state/task-state.json").read_text(encoding="utf-8"))
@@ -71,11 +83,13 @@ def main():
         print("[FAIL] task-state.json 缺少关键字段：")
         for item in absent_keys:
             print(f"- {item}")
+        _hint_docs()
         raise SystemExit(1)
 
     current_plan = Path(state["current_plan"])
     if not current_plan.exists():
         print(f"[FAIL] current_plan 不存在: {state['current_plan']}")
+        _hint_docs()
         raise SystemExit(1)
 
     for dir_path, pattern in DATE_NAME_PATTERNS.items():
@@ -86,6 +100,7 @@ def main():
             if not re.match(pattern, file.name):
                 print(f"[FAIL] 文件命名不符合规范: {file}")
                 print(f"       期望正则: {pattern}")
+                _hint_docs()
                 raise SystemExit(1)
 
     _validate_harness_bundle()

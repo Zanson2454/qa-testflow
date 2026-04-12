@@ -8,6 +8,11 @@ description: 新一轮开始前的项目状态对齐与启动检查
 ## 目标
 在每轮开始前完成最小闭环检查，确保本地状态、白皮书版本与上一轮证据一致，再进入 planning。
 
+## 文档
+
+- 开箱步骤与命令说明：`docs/guides/01-getting-started.md`
+- Harness 与 Ralph Loop 对照：`docs/guides/02-harness-and-ralph-loop.md`
+
 ## 执行步骤
 1. 读取 `workflow/state/task-state.json`，确认：
    - `current_iteration`

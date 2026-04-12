@@ -1,6 +1,12 @@
 # Project Goal
 [请在此处简述项目目标]
 
+# 文档入口
+
+- 开箱步骤与门禁命令：`docs/guides/01-getting-started.md`
+- Harness 与 Ralph Loop 对照：`docs/guides/02-harness-and-ralph-loop.md`
+- 指南索引：`docs/guides/README.md`
+
 # Working Mode
 - **Review First**: 每次开始工作必须先 review 最近一轮 change record，再进入本轮 plan。
 - **Plan Driven**: 必须先生成 plan，再进行实现；严禁跳过 plan 直接实现。

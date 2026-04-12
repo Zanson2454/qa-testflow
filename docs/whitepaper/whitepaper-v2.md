@@ -16,6 +16,17 @@
 
 目标（Goal）→ 计划（Plan）→ 设计（Design）→ 实现（Implement）→ 测试（Test）→ 评估（Evaluate）→ 反思（Reflect）→ 修复（Repair）→ 迭代（Loop）→ 交付（Deliver）
 
+### 2.1 与 Ralph Loop（外循环）的关系
+
+社区常见的 **Ralph Loop** 可概括为：执行 → **验证是否真正完成** → 未通过则注入反馈再迭代 → 在预算内停止。与本白皮书中的阶段可作如下对照（不必逐字绑定工具名）：
+
+- **执行**：Plan / Implement 阶段产出与代码变更。
+- **验证**：Evaluate / Review；在模板仓库中由 **门禁脚本（结构、状态）** 与 **harness/reviews（业务/任务完成度）** 共同承担，二者职责不同。
+- **反馈再迭代**：Reflect / Repair 与下一轮 Plan；模板通过 `harness/retros`、`harness/handoffs` 与 `AGENTS.md` 的 Review First 承接。
+- **停止**：`max_iterations`、`max_retry`、`stop_conditions`（见 `workflow/state/task-state.json`）。
+
+模板仓库将上述外循环 **落实为 Harness 证据目录 + 状态文件 + 质量门禁**；是否叠加全自动 orchestrator 属于演进选项，见 `docs/superpowers/specs/2026-04-10-output-process-auto-loop-design.md`。面向使用者的操作说明见 `docs/guides/`。
+
 ---
 
 ## 3. 产物规范
