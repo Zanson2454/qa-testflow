@@ -7,7 +7,7 @@
 |------|------|
 | [01-getting-started.md](./01-getting-started.md) | 克隆后第一步、门禁命令、首轮迭代最小步骤 |
 | [02-harness-and-ralph-loop.md](./02-harness-and-ralph-loop.md) | Harness 证据包与 Ralph Loop（外循环）在本模板中的对应关系 |
-| [03-new-iteration-manual-steps.md](./03-new-iteration-manual-steps.md) | **新一轮迭代**：仅文档、无脚本的完整操作顺序、自检与收尾 |
+| [03-new-iteration-manual-steps.md](./03-new-iteration-manual-steps.md) | **新一轮迭代**：完整操作顺序、自检与收尾（含可选 `init_iteration` 脚手架） |
 
 延伸阅读：
 
