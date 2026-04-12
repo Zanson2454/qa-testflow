@@ -6,7 +6,8 @@
 
 | 资源 | 说明 |
 |------|------|
-| [docs/guides/README.md](docs/guides/README.md) | **开箱即用**：命令、首轮步骤、[新一轮纯文档步骤](docs/guides/03-new-iteration-manual-steps.md)、Ralph Loop 对照 |
+| **[GET_START.md](GET_START.md)** | **详细上手（单一入口）**：环境、门禁、目录、完整迭代步骤、FAQ |
+| [docs/guides/README.md](docs/guides/README.md) | 分篇指南：精简上手、[新一轮纯文档步骤](docs/guides/03-new-iteration-manual-steps.md)、Ralph Loop 对照 |
 | [AGENTS.md](AGENTS.md) | Agent 与人类协作的强制流程 |
 | [docs/whitepaper/whitepaper-v2.md](docs/whitepaper/whitepaper-v2.md) | 状态机与产物 schema：`task-state.json` 中 `whitepaper_version` 应对齐 |
 
@@ -15,6 +16,7 @@
 ```text
 qa-testflow/
 ├── AGENTS.md
+├── GET_START.md        # 详细上手（根目录）
 ├── docs/
 │   ├── guides/          # 开箱步骤与 Harness / Ralph Loop 说明
 │   ├── plans/
@@ -44,11 +46,11 @@ qa-testflow/
    - `python3 workflow/check_quality.py`
    - `python3 workflow/run.py`  
    （或 `make check`、`make run`）
-3. 跟做「首轮迭代」与概念说明：**[docs/guides/01-getting-started.md](docs/guides/01-getting-started.md)**
+3. 详细阅读：**[GET_START.md](GET_START.md)**；精简版：**[docs/guides/01-getting-started.md](docs/guides/01-getting-started.md)**
 4. 新建一轮计划时，可复制 `docs/plans/plan-template.md`，更新 `docs/plans/index.md` 与 `workflow/state/task-state.json` 中的 `current_plan`
 5. 参考示例（历史轮次，仅作格式参考）：
    - `docs/plans/iter-001-plan.md`
-   - `harness/contexts/2026-04-12-04-context-doc-only-new-iteration-guide.md`（本轮：新一轮纯文档步骤指南）
+   - `harness/contexts/2026-04-12-05-context-add-get-start-md.md`（本轮：根目录 GET_START 详细上手）
    - `harness/changes/2026-04-09-01-change-init-scaffold.md` 等早期 `harness/*` 样例
 
 ## Agent 工作模式

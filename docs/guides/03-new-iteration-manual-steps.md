@@ -9,9 +9,11 @@
 
 ## 2. 承接上一轮（Review First）
 
-1. 打开最新 `harness/handoffs/`，读「下一会话建议」与风险。
-2. 若有 `harness/contexts/`，快速浏览本轮边界。
-3. 在脑中确认：**本轮单一主题**（不与并行主线混写）。
+1. 打开最新 `harness/changes/`，确认上一轮改了什么、风险和未解决项是什么。
+2. 打开最新 `harness/reviews/`，确认上一轮验收结论与未通过项。
+3. 打开最新 `harness/retros/` 与 `harness/handoffs/`，确认下一轮建议、风险与起手顺序。
+4. 打开最新 `harness/contexts/`，确认历史承接关系、本轮边界与非目标。
+5. 在脑中确认：**本轮单一主题**（不与并行主线混写）。
 
 ## 3. 新建本轮 Plan
 
@@ -20,9 +22,9 @@
 3. 编辑 `docs/plans/index.md`：增加一行，标明 `status: active` 或 `draft/completed`。
 4. 若本轮切换执行主线：编辑 `workflow/state/task-state.json` 的 `current_plan` 指向新 plan；**同时只能有一份 plan 为 `status: active`**（`run.py` 只认 `current_plan` 指向的文件里含 `status: active`）。
 
-## 4.（可选）本轮 Context
+## 4. 本轮 Context（必需）
 
-新建 `harness/contexts/YYYY-MM-DD-NN-context-<summary>.md`，写清：承接关系、范围、非目标、与上一轮差异。**不进入四件套门禁**，但强烈建议保留。
+新建 `harness/contexts/YYYY-MM-DD-NN-context-<summary>.md`，写清：承接关系、范围、非目标、与上一轮差异。`context` 虽然**不进入四件套门禁**，但在本仓库中属于 `AGENTS.md` 明确要求的必需产物，不应省略。
 
 ## 5. 新建四件套（与前缀一致）
 
@@ -38,7 +40,7 @@
 最小可填内容：
 
 - **change**：`files` 列表、`intent`、`risks`、`unresolved`（可随迭代补充）。
-- **review**：第一行或醒目处写 `passed: true` 或 `passed: false`（门禁不解析业务，但这是验收真相）。
+- **review**：第一行或醒目处写 `passed: true` 或 `passed: false`（门禁不解析业务，但这是验收真相）；完成判断时需显式对照本轮 plan 的 `done_criteria`。
 - **retro**：本轮做得好的点、改进点、下轮建议。
 - **handoff**：下一手建议阅读顺序、未决事项、元信息。
 
@@ -70,7 +72,14 @@ python3 workflow/run.py
 
 确认 `current_plan` 存在且含 `status: active`。
 
-## 8. 与「自动化初始化」的关系
+## 8. 任务完成后的收尾
+
+1. 回到本轮 `review`，确认是否已按 `done_criteria` 给出通过/失败结论。
+2. 确认本轮 `change/review/retro/handoff/context` 已全部落盘且前缀一致。
+3. 若本轮改动已验收通过，按仓库规则立即执行一次提交并推送，不要累计多个已通过任务再统一推送。
+4. 若本轮未通过，则在 `review`、`retro`、`handoff` 中明确失败点、风险与下轮建议，不要把未完成状态伪装成完成。
+
+## 9. 与「自动化初始化」的关系
 
 - 本页刻意 **不写** 任何生成脚本；若后续引入脚本，应与本步骤 **语义等价**，且不替代人类对 plan/review 的判断。
 - 概念背景见 [02-harness-and-ralph-loop.md](./02-harness-and-ralph-loop.md)。

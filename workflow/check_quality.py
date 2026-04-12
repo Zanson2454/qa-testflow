@@ -4,6 +4,7 @@ from pathlib import Path
 
 REQUIRED_FILES = [
     "AGENTS.md",
+    "GET_START.md",
     "workflow/state/task-state.json",
     "skills/bootstrap/SKILL.md",
     "skills/executor/SKILL.md",

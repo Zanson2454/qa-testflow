@@ -5,6 +5,8 @@
 ## plans
 
 - `iter-001-plan.md` - status: active
+- `2026-04-12-05-plan-add-get-start-md.md` - status: completed
+- `2026-04-12-05-plan-fix-guide-agents-alignment.md` - status: active
 - `2026-04-12-04-plan-doc-only-new-iteration-guide.md` - status: completed
 - `2026-04-12-03-plan-ootb-guides-and-template-hardening.md` - status: completed
 - `2026-04-12-02-plan-doc-hygiene-purge-external-tool-names.md` - status: completed

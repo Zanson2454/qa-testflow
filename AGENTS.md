@@ -3,6 +3,7 @@
 
 # 文档入口
 
+- **详细上手（推荐）**：根目录 `GET_START.md`（单一入口，含完整步骤与 FAQ）
 - 开箱步骤与门禁命令：`docs/guides/01-getting-started.md`
 - Harness 与 Ralph Loop 对照：`docs/guides/02-harness-and-ralph-loop.md`
 - 指南索引：`docs/guides/README.md`
