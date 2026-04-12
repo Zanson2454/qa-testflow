@@ -2,7 +2,7 @@
 
 ## 1. 术语
 
-- **Harness（本仓库含义）**：在 `harness/` 中按约定落盘的 **change / review / retro / handoff**（及可选 **context**），加上 `workflow/check_quality.py` 的结构校验，形成可审计的迭代证据包。
+- **Harness（本仓库含义）**：在 `harness/` 中按约定落盘的 **change / review / retro / handoff**，以及必需的 **context**（不参与四件套门禁），再加上 `workflow/check_quality.py` 的结构校验，形成可审计的迭代证据包。
 - **Ralph Loop（社区常见说法）**：在 AI 辅助开发里，用 **执行 → 验证是否完成 → 未通过则带反馈再试 → 在预算内停止** 的外层循环；往往配合「每轮独立上下文、文件系统持久化、尽量小步提交」。
 
 二者不是互斥标签：**本模板用 Harness 落实「每轮可验证、可交接」**；与 Ralph Loop 在 **流程形状** 上可对齐，但 **自动化程度** 取决于你是否额外实现 orchestrator（见下文）。
@@ -13,7 +13,7 @@
 |---------------------|------------------|
 | 执行（做任务） | `docs/plans` 的 steps + 实际改动；`harness/changes` 记录意图与文件列表 |
 | 验证完成度 | `harness/reviews`（`passed`）；门禁脚本只做 **结构/状态** 校验，不判断业务是否「真完成」 |
-| 反馈再迭代 | `harness/retros`、`harness/handoffs` 给下一轮；`AGENTS.md` 要求 Review First |
+| 反馈再迭代 | `harness/retros`、`harness/handoffs`、`harness/contexts` 给下一轮；`AGENTS.md` 要求 Review First |
 | 停止条件 | `task-state.json` 的 `max_iterations`、`max_retry`、`stop_conditions`；`workflow/run.py` 对部分越界给出提示 |
 | 跨轮记忆 | Git 历史 + `harness/` + `docs/plans`，而非仅会话上下文 |
 

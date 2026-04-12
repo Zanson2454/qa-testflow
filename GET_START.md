@@ -67,7 +67,7 @@ make run
 
 3. **本轮审计证据（Harness）**：`harness/`  
    - **四件套**（必参与门禁交集）：`changes` / `reviews` / `retros` / `handoffs`，文件名前缀须一致。  
-   - **可选**：`harness/contexts/`（上下文，不参与四件套交集，但强烈建议写）。
+   - **必需**：`harness/contexts/`（上下文，不参与四件套交集，但属于仓库流程要求）。
 
 ---
 
@@ -114,7 +114,10 @@ src/                      # 业务代码占位（按需扩展）
 
 ### 7.2 Review First
 
-- 阅读最新 `harness/handoffs/`（与可选 `harness/contexts/`），确认承接与边界。
+- 阅读最新 `harness/changes/`，确认上一轮改动、风险与未解决项。
+- 阅读最新 `harness/reviews/`，确认上一轮验收结论与未通过项。
+- 阅读最新 `harness/retros/` 与 `harness/handoffs/`，确认下一轮建议、风险与起手顺序。
+- 阅读最新 `harness/contexts/`，确认承接关系、本轮边界与非目标。
 
 ### 7.3 Plan
 
@@ -123,16 +126,16 @@ src/                      # 业务代码占位（按需扩展）
 3. 更新 `docs/plans/index.md`。  
 4. 若切换主线：修改 `task-state.json` 的 **`current_plan`** 指向新文件；且 **`run.py` 只校验该文件** 内含 `status: active`。
 
-### 7.4（可选）Context
+### 7.4 Context（必需）
 
-- 新建 `harness/contexts/YYYY-MM-DD-NN-context-<summary>.md`。
+- 新建 `harness/contexts/YYYY-MM-DD-NN-context-<summary>.md`，写明承接关系、范围、非目标与本轮差异。`context` 虽不参与四件套门禁，但不应省略。
 
 ### 7.5 四件套（同一前缀）
 
 | 目录 | 示例 |
 |------|------|
 | `harness/changes/` | `…-change-<summary>.md` |
-| `harness/reviews/` | `…-review-<summary>.md`（须含 `passed: true` 或 `passed: false`） |
+| `harness/reviews/` | `…-review-<summary>.md`（须含 `passed: true` 或 `passed: false`，并对照 `done_criteria`） |
 | `harness/retros/` | `…-retro-<summary>.md` |
 | `harness/handoffs/` | `…-handoff-<summary>.md` |
 
@@ -144,6 +147,13 @@ src/                      # 业务代码占位（按需扩展）
 python3 workflow/check_quality.py
 python3 workflow/run.py
 ```
+
+### 7.7 任务完成后的收尾
+
+1. 回到本轮 `review`，确认是否已按 `done_criteria` 给出通过/失败结论。
+2. 确认本轮 `change/review/retro/handoff/context` 已全部落盘且前缀一致。
+3. 若本轮改动已验收通过，按仓库规则立即执行一次提交并推送，不要累计多个已通过任务再统一推送。
+4. 若本轮未通过，则在 `review`、`retro`、`handoff` 中明确失败点、风险与下轮建议，不要把未完成状态伪装成完成。
 
 ---
 
