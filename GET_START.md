@@ -19,11 +19,21 @@
 |----|------|
 | Python 3 | 仅用于运行 `workflow/` 下脚本，**无需** `pip install` 项目依赖即可跑门禁 |
 | Git | 用于版本管理与协作 |
-| Make（可选） | 仓库根目录提供 `Makefile`，封装 `make check` / `make run` |
+| Make（可选） | 仓库根目录提供 `Makefile`，封装 `make check` / `make run` / `make doctor` 等 |
 
 ---
 
 ## 3. 克隆后第一件事（约 5 分钟）
+
+### 3.0 推荐：一键自检（等价于连续执行 check + run）
+
+```bash
+python3 workflow/doctor.py
+# 或
+make doctor
+```
+
+### 3.1 分步执行（与上等价）
 
 在**仓库根目录**执行：
 
@@ -39,14 +49,14 @@ make check
 make run
 ```
 
-### 3.1 `check_quality.py` 做什么
+### 3.2 `check_quality.py` 做什么
 
 - 校验一批**必需文件**存在（含 `AGENTS.md`、`docs/guides/*`、plan 模板等，见脚本内 `REQUIRED_FILES`）。
 - 校验 `workflow/state/task-state.json` 含关键字段。
 - 校验 `current_plan` 指向的文件**存在**。
 - 校验 `harness/changes`、`reviews`、`retros`、`handoffs` 下文件名符合正则，且存在**同一前缀** `YYYY-MM-DD-NN` 的 **四件套**（change / review / retro / handoff 各至少一个同前缀文件）。
 
-### 3.2 `run.py` 做什么
+### 3.3 `run.py` 做什么
 
 - 读取 `task-state.json`，检查当前 `current_state` 是否在允许集合内、`retry_count` / `current_iteration` 是否超出预算等。
 - 检查 **`current_plan`** 指向的 markdown 文件**正文**中含一行 **`status: active`**（全小写）。  
@@ -102,9 +112,15 @@ src/                      # 业务代码占位（按需扩展）
 
 ---
 
-## 7. 新一轮迭代 — 完整文档步骤（无脚本）
+## 7. 新一轮迭代 — 文档步骤 + 可选脚手架
 
-以下与 **`docs/guides/03-new-iteration-manual-steps.md`** 语义一致，此处汇总为**可打印检查表**。
+手工步骤与 **`docs/guides/03-new-iteration-manual-steps.md`** 一致；亦可先用脚本生成四件套骨架再编辑：
+
+```bash
+python3 workflow/init_iteration.py --summary my-feature-name
+# 同时生成 context：加 --context；仅预览路径：加 --dry-run
+# 或：make init SUMMARY=my-feature-name
+```
 
 ### 7.1 约定前缀
 
@@ -208,7 +224,7 @@ A：演进讨论见 **`docs/superpowers/specs/2026-04-10-output-process-auto-loo
 | [AGENTS.md](AGENTS.md) | 强制工作方式与 Done 定义 |
 | [docs/guides/README.md](docs/guides/README.md) | 分篇指南索引 |
 | [docs/guides/01-getting-started.md](docs/guides/01-getting-started.md) | 精简快速上手 |
-| [docs/guides/03-new-iteration-manual-steps.md](docs/guides/03-new-iteration-manual-steps.md) | 新一轮纯文档步骤（与第 7 节一致） |
+| [docs/guides/03-new-iteration-manual-steps.md](docs/guides/03-new-iteration-manual-steps.md) | 新一轮迭代步骤（与第 7 节一致，含 `init_iteration` 说明） |
 | [docs/whitepaper/whitepaper-v2.md](docs/whitepaper/whitepaper-v2.md) | 产物与状态机 schema |
 | [workflow/README.md](workflow/README.md) | 脚本行为说明 |
 

@@ -34,6 +34,8 @@ qa-testflow/
 ├── workflow/
 │   ├── state/task-state.json
 │   ├── prompts/
+│   ├── doctor.py           # 克隆后一键自检（check + run）
+│   ├── init_iteration.py   # 生成四件套骨架（可选）
 │   ├── run.py
 │   └── check_quality.py
 └── src/
@@ -43,14 +45,15 @@ qa-testflow/
 
 1. 进入仓库根目录：`cd qa-testflow`
 2. 跑通门禁与状态守卫：
-   - `python3 workflow/check_quality.py`
-   - `python3 workflow/run.py`  
-   （或 `make check`、`make run`）
+   - `python3 workflow/doctor.py`（推荐，等价于依次执行 check + run）
+   - 或 `python3 workflow/check_quality.py` 与 `python3 workflow/run.py`  
+   （或 `make doctor` / `make check`、`make run`）
 3. 详细阅读：**[GET_START.md](GET_START.md)**；精简版：**[docs/guides/01-getting-started.md](docs/guides/01-getting-started.md)**
 4. 新建一轮计划时，可复制 `docs/plans/plan-template.md`，更新 `docs/plans/index.md` 与 `workflow/state/task-state.json` 中的 `current_plan`
-5. 参考示例（历史轮次，仅作格式参考）：
+5. 生成本轮 harness 四件套骨架（可选）：`python3 workflow/init_iteration.py --summary my-feature` 或 `make init SUMMARY=my-feature`
+6. 参考示例（历史轮次，仅作格式参考）：
    - `docs/plans/iter-001-plan.md`
-   - `harness/contexts/2026-04-12-05-context-add-get-start-md.md`（本轮：根目录 GET_START 详细上手）
+   - `harness/contexts/2026-04-12-06-context-init-iteration-and-doctor.md`（本轮：doctor + init_iteration 开箱脚手架）
    - `harness/changes/2026-04-09-01-change-init-scaffold.md` 等早期 `harness/*` 样例
 
 ## Agent 工作模式

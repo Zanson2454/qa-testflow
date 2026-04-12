@@ -5,6 +5,7 @@
 ## plans
 
 - `iter-001-plan.md` - status: active
+- `2026-04-12-06-plan-init-iteration-and-doctor.md` - status: completed
 - `2026-04-12-05-plan-add-get-start-md.md` - status: completed
 - `2026-04-12-04-plan-doc-only-new-iteration-guide.md` - status: completed
 - `2026-04-12-03-plan-ootb-guides-and-template-hardening.md` - status: completed

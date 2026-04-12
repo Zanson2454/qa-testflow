@@ -13,7 +13,8 @@ description: 新一轮开始前的项目状态对齐与启动检查
 - 详细上手（单一入口）：根目录 `GET_START.md`
 - 开箱步骤与命令说明：`docs/guides/01-getting-started.md`
 - Harness 与 Ralph Loop 对照：`docs/guides/02-harness-and-ralph-loop.md`
-- 新一轮迭代（纯文档步骤）：`docs/guides/03-new-iteration-manual-steps.md`
+- 新一轮迭代步骤：`docs/guides/03-new-iteration-manual-steps.md`
+- 生成四件套骨架：`python3 workflow/init_iteration.py --summary <kebab-name>`
 
 ## 执行步骤
 1. 读取 `workflow/state/task-state.json`，确认：

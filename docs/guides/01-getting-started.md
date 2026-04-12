@@ -12,10 +12,17 @@
 在仓库根目录执行：
 
 ```bash
+python3 workflow/doctor.py
+```
+
+（等价于连续执行下面两条；亦可手动分步执行。）
+
+```bash
 python3 workflow/check_quality.py
 python3 workflow/run.py
 ```
 
+- `doctor.py`：依次调用门禁与状态守卫，适合克隆后一键确认环境。
 - `check_quality.py`：检查必需文件、`task-state.json` 字段、harness **四件套**（同一日期的 change/review/retro/handoff）是否齐全、plan 文件命名等。
 - `run.py`：校验当前 `workflow/state/task-state.json` 中的状态、迭代预算、`current_plan` 是否存在且标记为 **active**。
 

@@ -1,6 +1,8 @@
-# 新一轮迭代：纯文档操作步骤（无脚本）
+# 新一轮迭代：纯文档操作步骤（可选脚本脚手架）
 
-本页描述 **不依赖任何初始化脚本**、仅通过新建与编辑 Markdown 完成一轮 Harness 的标准顺序。若你尚未读过 [01-getting-started.md](./01-getting-started.md)，建议先完成「克隆后验证门禁」一节。
+本页描述通过新建与编辑 Markdown 完成一轮 Harness 的标准顺序。仓库提供 **`workflow/init_iteration.py`**（及 `make init SUMMARY=...`）用于生成四件套（及可选 context）**空骨架**，减少手写文件名成本；**plan 与 task-state 仍须人工**按下面步骤处理。
+
+若你尚未读过 [01-getting-started.md](./01-getting-started.md)，建议先完成「克隆后验证门禁」一节。
 
 ## 1. 约定本轮前缀
 
@@ -79,7 +81,8 @@ python3 workflow/run.py
 3. 若本轮改动已验收通过，按仓库规则立即执行一次提交并推送，不要累计多个已通过任务再统一推送。
 4. 若本轮未通过，则在 `review`、`retro`、`handoff` 中明确失败点、风险与下轮建议，不要把未完成状态伪装成完成。
 
-## 9. 与「自动化初始化」的关系
+## 9. 与 `init_iteration.py` 的关系
 
-- 本页刻意 **不写** 任何生成脚本；若后续引入脚本，应与本步骤 **语义等价**，且不替代人类对 plan/review 的判断。
+- `python3 workflow/init_iteration.py --summary <kebab-name>` 生成的四件套与本页命名规则一致；**不**替你创建 `docs/plans` 或修改 `task-state.json`。
+- 脚本与手工步骤 **语义等价**，不替代人类对 plan、review 结论与验收标准的判断。
 - 概念背景见 [02-harness-and-ralph-loop.md](./02-harness-and-ralph-loop.md)。
