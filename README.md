@@ -1,6 +1,6 @@
 # qa-testflow
 
-基于 Agent Harness 的工程化项目骨架，支持 **Plan-Driven** 迭代开发、证据留痕与回归基线沉淀。
+基于 Agent Harness 的通用工程化模板，聚焦 **Plan-Driven** 迭代开发、证据留痕、状态守卫与审计闭环。
 
 ## 项目结构
 
@@ -16,6 +16,7 @@ qa-testflow/
 │   └── executor/SKILL.md
 ├── harness/
 │   ├── changes/
+│   ├── contexts/
 │   ├── reviews/
 │   ├── retros/
 │   └── handoffs/
@@ -24,8 +25,7 @@ qa-testflow/
 │   ├── prompts/
 │   ├── run.py
 │   └── check_quality.py
-├── src/
-└── tests/
+└── src/
 ```
 
 ## 快速开始
@@ -36,10 +36,9 @@ qa-testflow/
   - `python3 workflow/run.py`
 3. 执行基础质量门禁：
   - `python3 workflow/check_quality.py`
-  - 或 `npm run check:harness`
 4. 按规范开始第一轮迭代：
   - 在 `docs/plans/` 创建本轮 plan（含 `status` 字段）
-  - 在 `harness/changes/`、`harness/reviews/`、`harness/retros/`、`harness/handoffs/` 写入本轮产物
+  - 在 `harness/contexts/`、`harness/changes/`、`harness/reviews/`、`harness/retros/`、`harness/handoffs/` 写入本轮产物
 5. 参考示例资产开始首轮：
   - `docs/plans/iter-001-plan.md`
   - `docs/plans/index.md`
@@ -47,6 +46,7 @@ qa-testflow/
   - `harness/reviews/2026-04-09-01-review-init-scaffold.md`
   - `harness/retros/2026-04-09-01-retro-init-scaffold.md`
   - `harness/handoffs/2026-04-09-01-handoff-next-focus.md`
+  - `harness/contexts/2026-04-12-01-context-template-remove-playwright.md`
 6. 更新主线状态：
   - 修改 `workflow/state/task-state.json`
 
@@ -75,14 +75,16 @@ qa-testflow/
 - 预算与停止策略：默认 `max_iterations=8`、`max_retry=3`，命中停止条件需人工介入
 - 结构化产物模板：`docs/templates/*.md`
 - 建议文件命名：`YYYY-MM-DD-01-<type>-<summary>.md`
+- 业务实现、测试框架与运行依赖不在模板中预绑定，应由使用方项目按需补入
 
 ## 迭代建议流程
 
 1. 读取 `task-state.json`，确认当前迭代和目标。
 2. 编写并评审执行计划（`docs/plans/`），并更新 `status` 与 `index.md`。
-3. 按计划实现并记录变更（`harness/changes/`）。
-4. 执行验收并写结论（`harness/reviews/`，`passed: true` 才能标记完成）。
-5. 复盘与下一轮输入（`harness/retros/` 与 `harness/handoffs/`）。
+3. 补齐本轮上下文（`harness/contexts/`），明确承接关系与边界。
+4. 按计划实现并记录变更（`harness/changes/`）。
+5. 执行验收并写结论（`harness/reviews/`，`passed: true` 才能标记完成）。
+6. 复盘与下一轮输入（`harness/retros/` 与 `harness/handoffs/`）。
 
 ## 注意事项
 
@@ -90,4 +92,4 @@ qa-testflow/
 - 验收通过后形成正式回归基线，后续迭代优先回归。
 - 若影响既有基线，需同步更新并在 change record 中说明影响。
 - 提交前必须通过 harness 四件套校验（change/review/retro/handoff）。
-
+- 模板仓库默认只保留 Harness 核心骨架，不内置特定业务样例或特定测试框架实现。
