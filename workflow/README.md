@@ -7,9 +7,9 @@
 | 脚本 | 作用 |
 |------|------|
 | `doctor.py` | 依次执行 `check_quality.py` 与 `run.py`，克隆后或提交前**一键自检** |
-| `check_quality.py` | 校验必需文件存在、`task-state.json` 关键字段、`current_plan` 文件存在、harness 四件套**同一日期前缀**、各 harness 文件名符合正则 |
+| `check_quality.py` | 校验必需文件存在、`task-state.json` 关键字段、`current_plan` 文件存在、harness 四件套**同一日期前缀**、最新轮次 `context`/`review.passed`、各 harness 文件名符合正则 |
 | `run.py` | 读取 `state/task-state.json`，校验当前状态合法、迭代/重试未越界、`current_plan` 文件含 `status: active` |
-| `init_iteration.py` | 生成本轮 **change/review/retro/handoff** 空骨架（可选 `--context`）；**不**创建 plan、不修改 `task-state.json` |
+| `init_iteration.py` | 默认生成本轮 **change/review/retro/handoff/context** 空骨架；**不**创建 plan、不修改 `task-state.json` |
 
 **建议**：克隆后执行 `python3 workflow/doctor.py`；提交前执行 `check_quality.py`。
 
@@ -17,7 +17,6 @@
 
 ```bash
 python3 workflow/init_iteration.py --summary my-feature-name
-python3 workflow/init_iteration.py --summary my-feature-name --context
 python3 workflow/init_iteration.py --summary my-feature-name --dry-run
 # 或：make init SUMMARY=my-feature-name
 ```

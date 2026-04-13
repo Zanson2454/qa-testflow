@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-生成本轮 harness 四件套（change / review / retro / handoff）最小骨架，降低「开箱后手写文件名」成本。
+生成本轮 harness 五件套（change / review / retro / handoff / context）最小骨架，降低「开箱后手写文件名」成本。
 
 用法（在仓库根目录执行）：
   python3 workflow/init_iteration.py --summary my-feature-name
@@ -112,7 +112,7 @@ def _write_if_absent(path: Path, content: str) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="初始化本轮 harness 四件套（可选 context）文件骨架。"
+        description="初始化本轮 harness 五件套文件骨架。"
     )
     parser.add_argument(
         "--summary",
@@ -132,7 +132,7 @@ def main() -> int:
     parser.add_argument(
         "--context",
         action="store_true",
-        help="同时创建 harness/contexts 下的 context 文件",
+        help="兼容保留参数；当前默认也会创建 harness/contexts 下的 context 文件。",
     )
     parser.add_argument(
         "--dry-run",
@@ -173,8 +173,7 @@ def main() -> int:
         print(f"前缀: {prefix}  summary: {args.summary}")
         for label, p in paths.items():
             print(f"[dry-run] {label}: {p}")
-        if args.context:
-            print(f"[dry-run] context: {ctx_path}")
+        print(f"[dry-run] context: {ctx_path}")
         print("提示：创建后请执行 python3 workflow/check_quality.py 验证四件套交集。")
         return 0
 
@@ -182,8 +181,7 @@ def main() -> int:
     _write_if_absent(paths["reviews"], _render_review(prefix, args.summary))
     _write_if_absent(paths["retros"], _render_retro(prefix, args.summary))
     _write_if_absent(paths["handoffs"], _render_handoff(prefix, args.summary))
-    if args.context:
-        _write_if_absent(ctx_path, _render_context(prefix, args.summary))
+    _write_if_absent(ctx_path, _render_context(prefix, args.summary))
 
     print(f"完成。本轮前缀: {prefix}")
     print("下一步：补全 change、编写/更新 docs/plans、执行实现后把 review.passed 改为 true，再运行：")

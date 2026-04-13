@@ -1,6 +1,6 @@
 # iter-001 plan
 
-status: active
+status: completed
 
 ## goal
 - 完成新项目首轮任务定义与执行边界澄清，形成后续实现可依赖的通用输入。

@@ -28,6 +28,8 @@ DATE_NAME_PATTERNS = {
     "harness/handoffs": r"^\d{4}-\d{2}-\d{2}-\d{2}-handoff-[a-z0-9-]+\.md$",
 }
 
+REVIEW_PASSED_PATTERN = re.compile(r"passed:\s*(true|false)")
+
 
 def _extract_prefix(file_name: str) -> str:
     # 文件命名前缀固定为 YYYY-MM-DD-XX，用于对齐同一轮证据四件套。
@@ -35,7 +37,7 @@ def _extract_prefix(file_name: str) -> str:
     return matched.group(1) if matched else ""
 
 
-def _validate_harness_bundle() -> None:
+def _validate_harness_bundle() -> str:
     bucket = {}
     for dir_path in DATE_NAME_PATTERNS:
         files = sorted(Path(dir_path).glob("*.md"))
@@ -54,6 +56,31 @@ def _validate_harness_bundle() -> None:
 
     latest_prefix = sorted(shared_prefix)[-1]
     print(f"[PASS] harness 四件套已对齐，最新轮次前缀: {latest_prefix}")
+    return latest_prefix
+
+
+def _validate_latest_context(prefix: str) -> None:
+    context_files = sorted(Path("harness/contexts").glob(f"{prefix}-context-*.md"))
+    if not context_files:
+        print(f"[FAIL] 最新轮次缺少 context 记录: {prefix}")
+        print("       请补齐 harness/contexts 下同前缀文件后再提交。")
+        _hint_docs()
+        raise SystemExit(1)
+
+
+def _validate_latest_review(prefix: str) -> None:
+    review_files = sorted(Path("harness/reviews").glob(f"{prefix}-review-*.md"))
+    valid_files = []
+    for review_file in review_files:
+        review_text = review_file.read_text(encoding="utf-8")
+        if REVIEW_PASSED_PATTERN.search(review_text):
+            valid_files.append(review_file)
+
+    if not valid_files:
+        print(f"[FAIL] 最新轮次 review 缺少明确的 passed: true/false 结论: {prefix}")
+        print("       请在 review 文件中写明 passed 状态后再提交。")
+        _hint_docs()
+        raise SystemExit(1)
 
 
 def _hint_docs():
@@ -105,7 +132,9 @@ def main():
                 _hint_docs()
                 raise SystemExit(1)
 
-    _validate_harness_bundle()
+    latest_prefix = _validate_harness_bundle()
+    _validate_latest_context(latest_prefix)
+    _validate_latest_review(latest_prefix)
     print("[PASS] 基础质量门禁通过。")
 
 

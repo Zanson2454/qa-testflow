@@ -1,6 +1,6 @@
 # 新一轮迭代：纯文档操作步骤（可选脚本脚手架）
 
-本页描述通过新建与编辑 Markdown 完成一轮 Harness 的标准顺序。仓库提供 **`workflow/init_iteration.py`**（及 `make init SUMMARY=...`）用于生成四件套（及可选 context）**空骨架**，减少手写文件名成本；**plan 与 task-state 仍须人工**按下面步骤处理。
+本页描述通过新建与编辑 Markdown 完成一轮 Harness 的标准顺序。仓库提供 **`workflow/init_iteration.py`**（及 `make init SUMMARY=...`）用于默认生成五件套（change / review / retro / handoff / context）**空骨架**，减少手写文件名成本；**plan 与 task-state 仍须人工**按下面步骤处理。
 
 若你尚未读过 [01-getting-started.md](./01-getting-started.md)，建议先完成「克隆后验证门禁」一节。
 
@@ -26,7 +26,7 @@
 
 ## 4. 本轮 Context（必需）
 
-新建 `harness/contexts/YYYY-MM-DD-NN-context-<summary>.md`，写清：承接关系、范围、非目标、与上一轮差异。`context` 虽然**不进入四件套门禁**，但在本仓库中属于 `AGENTS.md` 明确要求的必需产物，不应省略。
+新建 `harness/contexts/YYYY-MM-DD-NN-context-<summary>.md`，写清：承接关系、范围、非目标、与上一轮差异。`context` 不参与“四件套交集”本身，但当前 `check_quality.py` 会额外检查**最新轮次**必须存在对应 `context`，因此不应省略。
 
 ## 5. 新建四件套（与前缀一致）
 
@@ -63,6 +63,8 @@ python3 workflow/check_quality.py
 常见失败与处理：
 
 - **四件套前缀不一致**：四个目录中必须存在 **同一** `YYYY-MM-DD-NN` 前缀；删除旧轮或补全新轮（勿留空目录无文件——每目录至少要有一个合法命名文件参与交集，见门禁实现）。
+- **最新轮次缺少 `context`**：在 `harness/contexts/` 下补齐同前缀 `context` 文件。
+- **最新 `review` 缺少 `passed`**：在对应 `review` 中写明 `passed: true` 或 `passed: false`。
 - **文件名不符合正则**：`summary` 仅允许小写字母、数字、连字符；勿用下划线或中文段落在文件名里。
 - **缺 guides 等必需文件**：勿从模板中删除 `docs/guides/` 下被门禁声明的文件。
 
@@ -83,6 +85,6 @@ python3 workflow/run.py
 
 ## 9. 与 `init_iteration.py` 的关系
 
-- `python3 workflow/init_iteration.py --summary <kebab-name>` 生成的四件套与本页命名规则一致；**不**替你创建 `docs/plans` 或修改 `task-state.json`。
+- `python3 workflow/init_iteration.py --summary <kebab-name>` 默认生成的五件套与本页命名规则一致；**不**替你创建 `docs/plans` 或修改 `task-state.json`。
 - 脚本与手工步骤 **语义等价**，不替代人类对 plan、review 结论与验收标准的判断。
 - 概念背景见 [02-harness-and-ralph-loop.md](./02-harness-and-ralph-loop.md)。

@@ -1,5 +1,5 @@
 # Project Goal
-[请在此处简述项目目标]
+构建一个开箱即用的 Harness + Ralph-like manual loop 工程脚手架：克隆后可自检、可按规范生成迭代证据、可围绕 plan 与 guard scripts 稳定推进。
 
 # 文档入口
 
@@ -8,7 +8,9 @@
 - Harness 与 Ralph Loop 对照：`docs/guides/02-harness-and-ralph-loop.md`
 - 指南索引：`docs/guides/README.md`
 - 新一轮迭代步骤（含可选脚手架说明）：`docs/guides/03-new-iteration-manual-steps.md`
-- 生成四件套骨架：`python3 workflow/init_iteration.py --summary <kebab-name>`（见 `workflow/README.md`）
+- 生成五件套骨架：`python3 workflow/init_iteration.py --summary <kebab-name>`（默认含 `context`，见 `workflow/README.md`）
+
+当前仓库定位：**Harness + Ralph-like manual loop + guard scripts**。默认不提供自动 orchestrator；状态推进与任务完成判断仍由人和流程约定主导。
 
 # Working Mode
 - **Review First**: 每次开始工作必须先 review 最近一轮 change record，再进入本轮 plan。

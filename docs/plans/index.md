@@ -1,10 +1,11 @@
 # Plans Index
 
-- current: `iter-001-plan.md`
+- current: `2026-04-13-01-plan-bootstrap-alignment.md`
 
 ## plans
 
-- `iter-001-plan.md` - status: active
+- `2026-04-13-01-plan-bootstrap-alignment.md` - status: active
+- `iter-001-plan.md` - status: completed
 - `2026-04-12-06-plan-init-iteration-and-doctor.md` - status: completed
 - `2026-04-12-05-plan-add-get-start-md.md` - status: completed
 - `2026-04-12-04-plan-doc-only-new-iteration-guide.md` - status: completed

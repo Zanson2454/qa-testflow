@@ -23,7 +23,7 @@ python3 workflow/run.py
 ```
 
 - `doctor.py`：依次调用门禁与状态守卫，适合克隆后一键确认环境。
-- `check_quality.py`：检查必需文件、`task-state.json` 字段、harness **四件套**（同一日期的 change/review/retro/handoff）是否齐全、plan 文件命名等。
+- `check_quality.py`：检查必需文件、`task-state.json` 字段、harness **四件套**（同一日期的 change/review/retro/handoff）是否齐全、最新轮次 `context` 是否存在、最新 `review` 是否写明 `passed`，以及 plan 文件命名等。
 - `run.py`：校验当前 `workflow/state/task-state.json` 中的状态、迭代预算、`current_plan` 是否存在且标记为 **active**。
 
 若失败，按终端提示修正后再跑。也可使用 `make check` / `make run`（见根目录 `Makefile`）。
@@ -36,7 +36,7 @@ python3 workflow/run.py
 
 ## 4. 开启新一轮迭代（最小步骤）
 
-概要如下；**逐步清单、命名与自检**见 **[03-new-iteration-manual-steps.md](./03-new-iteration-manual-steps.md)**（纯文档、无脚本）。
+概要如下；**逐步清单、命名与自检**见 **[03-new-iteration-manual-steps.md](./03-new-iteration-manual-steps.md)**（纯文档、无脚本）。当前模板采用 **Harness + Ralph-like manual loop + guard scripts**。
 
 1. **Review**：阅读上一轮 `harness/changes/`、`harness/reviews/`、`harness/retros/`、`harness/handoffs/` 与 `harness/contexts/`（若有）。
 2. **Plan**：复制 `docs/plans/plan-template.md` 为新文件，改标题与 `status`，填写 `goal` / `steps` / `done_criteria`；更新 `docs/plans/index.md`；将 `task-state.json` 的 `current_plan` 指向新 plan（若本轮切换主线）。
@@ -55,8 +55,8 @@ python3 workflow/run.py
 
 ## 6. 常见问题
 
-**Q：`check_quality` 报四件套不齐？**  
-A：在 `harness/changes`、`reviews`、`retros`、`handoffs` 中补齐**同一天前缀**的四个文件。
+**Q：`check_quality` 报四件套不齐或缺少 `context/review.passed`？**
+A：先补齐 `harness/changes`、`reviews`、`retros`、`handoffs` 中**同一天前缀**的四个文件，再补上同前缀 `context`，并在最新 `review` 中写明 `passed: true` 或 `passed: false`。
 
 **Q：`run.py` 报 plan 未 active？**  
 A：打开 `current_plan` 指向的文件，确保正文中有单独一行 `status: active`（全小写）。

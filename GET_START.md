@@ -7,7 +7,7 @@
 
 ## 1. 本仓库是什么
 
-- **定位**：基于 **Agent Harness** 的通用工程化模板，强调 **Plan-Driven**、证据留痕、状态守卫与审计闭环。
+- **定位**：基于 **Agent Harness** 的通用工程化模板，强调 **Plan-Driven**、证据留痕、状态守卫与审计闭环；当前形态是 **Harness + Ralph-like manual loop + guard scripts**。
 - **不预绑定**：具体业务代码、测试框架（如 UI/E2E）、运行时依赖由使用方按需添加；模板提供 **流程、目录、门禁与文档骨架**。
 - **白皮书**：工程约定见 `docs/whitepaper/`，执行时 **`workflow/state/task-state.json` 中的 `whitepaper_version`** 应与所选白皮书版本一致（通常为 `v2`）。
 
@@ -55,6 +55,7 @@ make run
 - 校验 `workflow/state/task-state.json` 含关键字段。
 - 校验 `current_plan` 指向的文件**存在**。
 - 校验 `harness/changes`、`reviews`、`retros`、`handoffs` 下文件名符合正则，且存在**同一前缀** `YYYY-MM-DD-NN` 的 **四件套**（change / review / retro / handoff 各至少一个同前缀文件）。
+- 校验最新轮次存在对应 `harness/contexts` 记录，且最新 `review` 写明 `passed: true` 或 `passed: false`。
 
 ### 3.3 `run.py` 做什么
 
@@ -114,11 +115,11 @@ src/                      # 业务代码占位（按需扩展）
 
 ## 7. 新一轮迭代 — 文档步骤 + 可选脚手架
 
-手工步骤与 **`docs/guides/03-new-iteration-manual-steps.md`** 一致；亦可先用脚本生成四件套骨架再编辑：
+手工步骤与 **`docs/guides/03-new-iteration-manual-steps.md`** 一致；亦可先用脚本生成五件套骨架再编辑：
 
 ```bash
 python3 workflow/init_iteration.py --summary my-feature-name
-# 同时生成 context：加 --context；仅预览路径：加 --dry-run
+# 默认同时生成 context；仅预览路径：加 --dry-run
 # 或：make init SUMMARY=my-feature-name
 ```
 
@@ -175,8 +176,8 @@ python3 workflow/run.py
 
 ## 8. Harness 与 Ralph Loop（外循环）— 一句话 + 延伸阅读
 
-- **Harness**：把每轮证据落在 `harness/`，用门禁保证「四件套齐全、命名合法」。  
-- **Ralph Loop**：社区常见的「执行 → 验证完成度 → 反馈再迭代 → 预算内停止」；本模板用 **review + 门禁 + task-state 预算** 对齐其**形状**，**不**默认自带自动无限重试的编排脚本。  
+- **Harness**：把每轮证据落在 `harness/`，用门禁保证「四件套齐全、命名合法」，并对最新轮次补充 `context` 与 `review.passed` 守卫。
+- **Ralph Loop**：社区常见的「执行 → 验证完成度 → 反馈再迭代 → 预算内停止」；本模板用 **review + 门禁 + task-state 预算** 对齐其**形状**，当前是 **manual loop + guard scripts**，**不**默认自带自动无限重试的编排脚本。
 - 详细对照见 **[docs/guides/02-harness-and-ralph-loop.md](docs/guides/02-harness-and-ralph-loop.md)**。
 
 ---

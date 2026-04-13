@@ -1,9 +1,9 @@
 {
   "task_id": "task-001",
   "current_iteration": 1,
-  "current_state": "created",
-  "current_goal": "Initial setup and first iteration planning",
-  "current_plan": "docs/plans/iter-001-plan.md",
+  "current_state": "planning",
+  "current_goal": "Bootstrap alignment for an out-of-box Harness plus Ralph-like loop scaffold",
+  "current_plan": "docs/plans/2026-04-13-01-plan-bootstrap-alignment.md",
   "whitepaper_version": "v2",
   "allowed_states": [
     "created",
